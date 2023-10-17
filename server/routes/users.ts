@@ -15,14 +15,17 @@ const JWT_ISSUER = process.env.JWT_ISSUER || 'scouts-server';
 const JWT_TOKEN = process.env.JWT_TOKEN || 'token';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-router.get('/', auth, async (req: Request, res: Response) => {
-  try {
-    const users = await prisma.user.findMany();
-    res.status(200).json(users);
-  } catch (err) {
-    res.status(500).json(err);
+router.get(
+  '/',
+  /* auth, */ async (req: Request, res: Response) => {
+    try {
+      const users = await prisma.user.findMany();
+      res.status(200).json(users);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   }
-});
+);
 
 router.get('/:id', auth, async (req: Request, res: Response) => {
   try {
@@ -47,11 +50,7 @@ router.post(
       .trim()
       .isLength({ min: 3, max: 20 })
       .withMessage('Name must be between 3 and 20 characters'),
-    check('email')
-      .isEmail()
-      .withMessage('Email is required')
-      .trim()
-      .normalizeEmail(),
+    check('email').isEmail().withMessage('Email is required').trim(),
     check('password')
       .notEmpty()
       .withMessage('Password is required')
@@ -77,8 +76,9 @@ router.post(
     try {
       const errors = validationResult(req);
 
-      if (errors) {
-        return res.status(500).json(errors);
+      if (errors.array().length > 0) {
+        console.log(errors);
+        return res.status(500).json({ 'Errors in validation': errors.array() });
       }
 
       const { name, email, password, role } = req.body;
@@ -89,13 +89,13 @@ router.post(
         },
       });
 
-      if (userExists) {
+      if (userExists !== null) {
         return res.status(500).json('User already exists');
       }
 
-      const hashedPassword = await bcrypt.hash(password, SALT);
+      const hashedPassword = await bcrypt.hash(password, Number(SALT));
 
-      const user = prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           name: name,
           email: email,
@@ -103,8 +103,10 @@ router.post(
           role: role,
         },
       });
+
       res.status(200).json(user);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   }
@@ -130,7 +132,7 @@ router.post(
       const errors = validationResult(req);
 
       if (errors) {
-        return res.status(500).json(errors);
+        return res.status(500).json('Errors in validation');
       }
 
       const { email, password } = req.body;
