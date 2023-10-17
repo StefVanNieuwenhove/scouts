@@ -9,7 +9,7 @@
     "node": "18.17.1"
   },
   "scripts": {
-    "start": "ts-node app.js",
+    "start": "ts-node app.ts",
     "dev": "nodemon app.ts",
     "build": "tsc -p . && prisma generate",
     "prisma": "prisma migrate dev --name init"
