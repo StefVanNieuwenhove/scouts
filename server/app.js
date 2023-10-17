@@ -17,7 +17,7 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
-const indexRouter = require('./routes');
+const index_1 = __importDefault(require("./routes/index"));
 app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
@@ -27,7 +27,7 @@ app.use((0, cors_1.default)(corsOptions));
 app.get('/', (req, res) => {
     res.status(200).json('Hello World!');
 });
-app.use('/api', indexRouter);
+app.use('/api', index_1.default);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

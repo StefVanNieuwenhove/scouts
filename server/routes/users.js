@@ -95,7 +95,6 @@ router.post('/register', [
             return res.status(500).json('User already exists');
         }
         const hashedPassword = yield bcrypt_1.default.hash(password, Number(SALT));
-        console.log('hashedPassword: ', hashedPassword);
         const user = yield prisma.user.create({
             data: {
                 name: name,
@@ -104,7 +103,6 @@ router.post('/register', [
                 role: role,
             },
         });
-        console.log('res: ', user);
         res.status(200).json(user);
     }
     catch (err) {
@@ -127,7 +125,8 @@ router.post('/login', [
 ], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const errors = (0, express_validator_1.validationResult)(req);
-        if (errors) {
+        if (errors.array().length > 0) {
+            console.log('Validation ', errors);
             return res.status(500).json('Errors in validation');
         }
         const { email, password } = req.body;
@@ -136,7 +135,8 @@ router.post('/login', [
                 email: email,
             },
         });
-        if (!user) {
+        if (user === null) {
+            console.log('User does not exist');
             return res.status(500).json('User does not exist');
         }
         const validPassword = bcrypt_1.default.compare(password, user.password);
@@ -157,9 +157,11 @@ router.post('/login', [
             httpOnly: true,
             secure: NODE_ENV === 'production',
         });
+        console.log({ user: user, token: token });
         res.status(200).json(user);
     }
     catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 }));

@@ -7,4 +7,4 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const usersRouter = require('./users');
 router.use('/user', usersRouter);
-module.exports = router;
+exports.default = router;

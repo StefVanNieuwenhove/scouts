@@ -131,7 +131,8 @@ router.post(
     try {
       const errors = validationResult(req);
 
-      if (errors) {
+      if (errors.array().length > 0) {
+        console.log('Validation ', errors);
         return res.status(500).json('Errors in validation');
       }
 
@@ -143,7 +144,8 @@ router.post(
         },
       });
 
-      if (!user) {
+      if (user === null) {
+        console.log('User does not exist');
         return res.status(500).json('User does not exist');
       }
 
@@ -170,8 +172,10 @@ router.post(
         secure: NODE_ENV === 'production',
       });
 
+      console.log({ user: user, token: token });
       res.status(200).json(user);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   }

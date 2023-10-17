@@ -16,7 +16,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-const indexRouter = require('./routes');
+import indexRouter from './routes/index';
 
 app.use(logger('dev'));
 app.use(express.json());
