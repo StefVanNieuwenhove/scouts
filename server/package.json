@@ -5,6 +5,9 @@
   "repository": "git@github.com:StefVanNieuwenhove/scouts.git",
   "author": "stefvannieuwenhove <stef.vannieuwenhove@telenet.be>",
   "license": "MIT",
+  "engines": {
+    "node": "18.17.1"
+  },
   "scripts": {
     "start": "ts-node app.ts",
     "dev": "nodemon app.ts",
