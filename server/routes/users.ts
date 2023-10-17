@@ -27,7 +27,7 @@ router.get(
   }
 );
 
-router.get('/:id', auth, async (req: Request, res: Response) => {
+/* router.get('/:id', auth, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await prisma.user.findUnique({
@@ -188,6 +188,6 @@ router.post('/logout', async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).json(err);
   }
-});
+}); */
 
 module.exports = router;
