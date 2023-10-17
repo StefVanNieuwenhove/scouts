@@ -1,4 +1,12 @@
 import express, { Request, Response } from 'express';
+
+const router = express.Router();
+
+router.get('/', (req: Request, res: Response) => {
+  res.status(200).json('Hello World!');
+});
+
+/*import express, { Request, Response } from 'express';
 import { PrismaClient, User, User_role } from '@prisma/client';
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
@@ -15,19 +23,16 @@ const JWT_ISSUER = process.env.JWT_ISSUER || 'scouts-server';
 const JWT_TOKEN = process.env.JWT_TOKEN || 'token';
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-router.get(
-  '/',
-  /* auth, */ async (req: Request, res: Response) => {
-    try {
-      const users = await prisma.user.findMany();
-      res.status(200).json(users);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
   }
-);
+});
 
-/* router.get('/:id', auth, async (req: Request, res: Response) => {
+ router.get('/:id', auth, async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const user = await prisma.user.findUnique({
