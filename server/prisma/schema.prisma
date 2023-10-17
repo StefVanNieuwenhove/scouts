@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lid {
+  lidnummer     String        @id
+  voornaam      String
+  achternaam    String
+  email         String        @unique
+  geboortedatum DateTime
+  tak           Lid_tak       @default(kapoenen)
+  geslacht      Lid_geslacht  @default(onbekend)
+  straat        String
+  huisnummer    String
+  busnummer     String
+  postcode      String
+  gemeente      String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime
+  Ouder         Ouder[]
+  Vergadering   Vergadering[]
+}
+
+model Ouder {
+  id         String        @id
+  voornaam   String
+  achternaam String
+  email      String        @unique
+  functie    Ouder_functie @default(andere)
+  gsm        String        @unique
+  straat     String
+  huisnummer String
+  busnummer  String
+  postcode   String
+  gemeente   String
+  lidnummer  String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime
+  Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade)
+
+  @@index([lidnummer], map: "Ouder_lidnummer_fkey")
+}
+
+model User {
+  id          String        @id
+  email       String        @unique
+  name        String
+  password    String
+  role        User_role     @default(kapoen)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime
+  Vergadering Vergadering[]
+}
+
+model Vergadering {
+  id          String          @id
+  titel       String
+  datum       DateTime
+  tak         Vergadering_tak @default(kapoenen)
+  userUpdated String
+  lidnummer   String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime
+  Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade)
+  User        User            @relation(fields: [userUpdated], references: [id])
+
+  @@index([lidnummer], map: "Vergadering_lidnummer_fkey")
+  @@index([userUpdated], map: "Vergadering_userUpdated_fkey")
+}
+
+enum Vergadering_tak {
+  kapoenen
+  wouters
+  jonggivers
+  givers
+  jins
+}
+
+enum Ouder_functie {
+  moeder
+  vader
+  voogd
+  grootouder
+  andere
+}
+
+enum User_role {
+  admin
+  kapoen
+  wouter
+  jonggiver
+  giver
+  jin
+}
+
+enum Lid_tak {
+  kapoenen
+  wouters
+  jonggivers
+  givers
+  jins
+}
+
+enum Lid_geslacht {
+  man
+  vrouw
+  onbekend
+}
