@@ -11,7 +11,8 @@
   "scripts": {
     "start": "ts-node app.ts",
     "dev": "nodemon app.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "prisma": "prisma migrate dev --name init"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",

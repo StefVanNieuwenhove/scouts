@@ -41,7 +41,7 @@ model Ouder {
   lidnummer  String
   createdAt  DateTime      @default(now())
   updatedAt  DateTime
-  Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade)
+  Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Ouder_LidConstraint")
 
   @@index([lidnummer], map: "Ouder_lidnummer_fkey")
 }
@@ -66,8 +66,8 @@ model Vergadering {
   lidnummer   String
   createdAt   DateTime        @default(now())
   updatedAt   DateTime
-  Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade)
-  User        User            @relation(fields: [userUpdated], references: [id])
+  Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Vergadering_LidConstraint")
+  User        User            @relation(fields: [userUpdated], references: [id], map: "Vergadering_UserConstraint")
 
   @@index([lidnummer], map: "Vergadering_lidnummer_fkey")
   @@index([userUpdated], map: "Vergadering_userUpdated_fkey")
