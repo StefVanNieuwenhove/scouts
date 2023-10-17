@@ -11,7 +11,7 @@
   "scripts": {
     "start": "ts-node app.js",
     "dev": "nodemon app.ts",
-    "build": "tsc -p .",
+    "build": "tsc -p . && prisma generate",
     "prisma": "prisma migrate dev --name init"
   },
   "dependencies": {

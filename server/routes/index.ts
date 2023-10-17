@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-const usersRouter = require('./users');
+import usersRouter from './users';
 
 router.use('/user', usersRouter);
 
