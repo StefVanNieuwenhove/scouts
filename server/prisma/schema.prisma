@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Lid {
-  lidnummer     String        @id
+  lidnummer     String        @id @default(uuid())
   voornaam      String
   achternaam    String
   email         String        @unique
@@ -21,13 +21,13 @@ model Lid {
   postcode      String
   gemeente      String
   createdAt     DateTime      @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime      @updatedAt
   Ouder         Ouder[]
   Vergadering   Vergadering[]
 }
 
 model Ouder {
-  id         String        @id
+  id         String        @id @default(uuid())
   voornaam   String
   achternaam String
   email      String        @unique
@@ -40,32 +40,32 @@ model Ouder {
   gemeente   String
   lidnummer  String
   createdAt  DateTime      @default(now())
-  updatedAt  DateTime
+  updatedAt  DateTime     @updatedAt
   Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Ouder_LidConstraint")
 
   @@index([lidnummer], map: "Ouder_lidnummer_fkey")
 }
 
 model User {
-  id          String        @id
+  id          String        @id @default(uuid())
   email       String        @unique
   name        String
   password    String
   role        User_role     @default(kapoen)
   createdAt   DateTime      @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime      @updatedAt  
   Vergadering Vergadering[]
 }
 
 model Vergadering {
-  id          String          @id
+  id          String          @id @default(uuid())
   titel       String
   datum       DateTime
   tak         Vergadering_tak @default(kapoenen)
   userUpdated String
   lidnummer   String
   createdAt   DateTime        @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime      @updatedAt
   Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Vergadering_LidConstraint")
   User        User            @relation(fields: [userUpdated], references: [id], map: "Vergadering_UserConstraint")
 
@@ -96,6 +96,8 @@ enum User_role {
   jonggiver
   giver
   jin
+  board
+  parent
 }
 
 enum Lid_tak {
