@@ -10,20 +10,20 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  origin: ['http://localhost:3000', 'http://localhost:5137'],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-import indexRouter from './routes/index';
-
-app.use(logger('dev'));
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(helmet());
 app.use(cors(corsOptions));
+app.use(helmet());
+app.use(logger('dev'));
+
+// Routes
+import indexRouter from './routes';
 
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json('Hello World!');
