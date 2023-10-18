@@ -154,7 +154,7 @@ router.post(
       };
 
       const token = jwt.sign(payload, JWT_SECRET, {
-        expiresIn: JWT_EXPIRES_IN,
+        expiresIn: 60 * 60,
         issuer: JWT_ISSUER,
       });
 
