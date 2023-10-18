@@ -62,7 +62,7 @@ router.post(
         'jonggiver',
         'giver',
         'jins',
-        'hoofdleiding',
+        'groepsleiding',
         'board',
         'parent',
       ]),
