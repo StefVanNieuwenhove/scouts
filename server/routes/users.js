@@ -163,7 +163,15 @@ router.post(
         secure: NODE_ENV === 'production',
       });
 
-      res.status(200).json({ user, token });
+      res.status(200).json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
+        token,
+      });
     } catch (err) {
       console.log(err);
       res.status(500).json(err);
