@@ -96,6 +96,7 @@ enum User_role {
   jonggiver
   giver
   jin
+groepsleiding
   board
   parent
 }
