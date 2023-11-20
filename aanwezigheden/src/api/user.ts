@@ -43,6 +43,25 @@ export const login = async (
   return data.data;
 };
 
+export const register = async (
+  name: string,
+  email: string,
+  password: string,
+  role: string
+): Promise<User | undefined> => {
+  try {
+    const data = await axios.post(
+      '/user/register',
+      { name, email, password, role },
+      { withCredentials: true }
+    );
+    return data.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const logout = async (): Promise<void> => {
   await axios.post('/user/logout');
 };

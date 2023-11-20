@@ -21,3 +21,11 @@ export type User = {
   created_at: string;
   updated_at: string;
 };
+
+export interface ISnackbar {
+  open: boolean;
+  message: string;
+  type: 'succes' | 'error' | 'warning' | 'info';
+  position: 'left' | 'right' | 'center';
+  duration: number;
+}
