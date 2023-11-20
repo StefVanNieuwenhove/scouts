@@ -33,12 +33,12 @@ const Login = () => {
           className='flex items-center mb-6 text-2xl font-semibold text-gray-900'>
           <img
             className='w-8 h-8 mr-2'
-            src='https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'
+            src='https://teralwina.be/wp-content/uploads/2014/10/de_heks2.png'
             alt='logo'
           />
           Scouts Ter Alwina
         </a>
-        <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
+        <div className='w-full bg-white rounded-lg border-lime-500 border shadow md:mt-0 sm:max-w-md xl:p-0'>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
             <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl'>
               Sign in to your account

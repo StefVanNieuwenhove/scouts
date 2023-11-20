@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth/AuthProvider';
 import { MdOutlineLogout, MdOutlinePedalBike } from 'react-icons/md';
@@ -49,7 +49,7 @@ const tak = [
 
 const admin = [
   {
-    url: '/admin/leden',
+    url: '/admin/members',
     name: 'Leden',
     icon: <HiOutlineUserGroup className='text-white' />,
   },
@@ -76,21 +76,21 @@ const NavAdmin = memo(() => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  if (user?.role !== 'admin') navigate('/login');
+  useEffect(() => {
+    if (user?.role !== 'admin') navigate('/login');
+  }, [user, navigate]);
 
   return (
     <>
-      <header className='bg-green-600'>
-        {!open && (
-          <nav className='w-full h-full inline-flex text-white px-3 py-2'>
-            <button onClick={() => setOpen(true)} className=''>
-              <GiHamburgerMenu className='text-2xl' />
-            </button>
-            <h1 className='text-3xl underline text-center w-full'>
-              Aanwezigheden
-            </h1>
-          </nav>
-        )}
+      <header className='bg-lime-700'>
+        <nav className='w-full h-full inline-flex text-white px-3 py-2'>
+          <button onClick={() => setOpen(true)} className=''>
+            <GiHamburgerMenu className='text-2xl' />
+          </button>
+          <h1 className='text-3xl underline text-center w-full'>
+            Aanwezigheden
+          </h1>
+        </nav>
         <aside
           className={
             open
@@ -98,12 +98,11 @@ const NavAdmin = memo(() => {
               : 'hidden fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full overflow-scroll sm:translate-x-0'
           }
           onClick={() => setOpen(false)}>
-          <div className='bg-green-600 text-white px-3 py-2 flex flex-col gap-2'>
-            <h1 className='text-3xl underline'>Aanwezigheden</h1>
+          <div className='bg-lime-700 text-white px-3 py-2 flex flex-col gap-2'>
             <h2 className='text-sm'>Name: {user?.name}</h2>
             <h3 className='text-sm'>Role: {user?.role}</h3>
           </div>
-          <div className='h-full px-3 py-4 overflow-y-auto bg-green-600'>
+          <div className='h-full px-3 py-4 overflow-y-auto bg-lime-700'>
             <ul className='space-y-2 pt-4 mt-1 font-medium border-t border-white'>
               {tak.map((item, index) => (
                 <NavLink
@@ -136,7 +135,7 @@ const NavAdmin = memo(() => {
             <ul className='pt-4 mt-4 space-y-2 font-medium border-t border-white'>
               <li className=''>
                 <NavLink
-                  to='/admin/account'
+                  to='/admin/profile'
                   className='flex items-center p-2 text-white hover:border-b group hover:cursor-pointer'>
                   <span className='text-lg'>
                     <RiAccountCircleLine />
@@ -145,7 +144,10 @@ const NavAdmin = memo(() => {
                 </NavLink>
               </li>
               <li
-                onClick={() => logout()}
+                onClick={() => {
+                  logout();
+                  navigate('/logout');
+                }}
                 className='flex items-center p-2 text-white hover:border-b group hover:cursor-pointer'>
                 <MdOutlineLogout className='text-white text-xl' />
                 <p className='ml-3'>Logout</p>

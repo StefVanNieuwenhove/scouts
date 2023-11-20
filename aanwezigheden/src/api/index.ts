@@ -1,10 +1,10 @@
 import axiosRoot from 'axios';
 
-const BASE_URL = 'https://scouts-server.onrender.com/api/';
-//const DEV_URL = 'http://localhost:8080/api/';
+//const BASE_URL = import.meta.env.VITE_SERVER_URL;
+const DEV_URL = import.meta.env.VITE_DEV_URL;
 
 export const axios = axiosRoot.create({
-  baseURL: BASE_URL,
+  baseURL: DEV_URL,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'http://localhost:5173',

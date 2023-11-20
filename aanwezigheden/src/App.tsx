@@ -1,35 +1,38 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { NavAdmin, RedirectRoute } from './components';
-import { AuthProvider } from './context';
 import {
   Dashboard,
-  GiverAdmin,
-  JinAdmin,
-  JonggiverAdmin,
-  KapoenAdmin,
   Login,
-  WouterAdmin,
+  Kapoen,
+  Wouter,
+  Jonggiver,
+  Giver,
+  Jin,
+  Logout,
+  Members,
+  Leiding,
+  Profile,
 } from './pages';
 
 function App() {
   return (
     <>
-      <Router>
-        <AuthProvider>
-          <Routes>
-            <Route path='/' element={<RedirectRoute url='login' replace />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/admin' element={<NavAdmin />}>
-              <Route index element={<Dashboard />} />
-              <Route path='kapoen' element={<KapoenAdmin />} />
-              <Route path='wouter' element={<WouterAdmin />} />
-              <Route path='jonggiver' element={<JonggiverAdmin />} />
-              <Route path='giver' element={<GiverAdmin />} />
-              <Route path='jin' element={<JinAdmin />} />
-            </Route>
-          </Routes>
-        </AuthProvider>
-      </Router>
+      <Routes>
+        <Route path='/' element={<RedirectRoute url='login' replace />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/logout' element={<Logout />} />
+        <Route path='/admin' element={<NavAdmin />}>
+          <Route index element={<Dashboard />} />
+          <Route path='kapoen' element={<Kapoen />} />
+          <Route path='wouter' element={<Wouter />} />
+          <Route path='jonggiver' element={<Jonggiver />} />
+          <Route path='giver' element={<Giver />} />
+          <Route path='jin' element={<Jin />} />
+          <Route path='members' element={<Members />} />
+          <Route path='leiding' element={<Leiding />} />
+          <Route path='profile' element={<Profile />} />
+        </Route>
+      </Routes>
     </>
   );
 }

@@ -9,6 +9,7 @@ export interface IAuthProvider {
   error: string;
   token: string | null;
   setSession: (token: string, user: User | null) => Promise<void>;
+  isAdmin: boolean;
 }
 
 export type User = {

@@ -12,6 +12,7 @@ import { IAuthProvider, User } from '../../types';
 import * as userApi from '../../api/user';
 import * as api from '../../api';
 import { Buffer } from 'buffer';
+import { useNavigate } from 'react-router-dom';
 
 const TOKEN_KEY = 'scouts-token';
 
@@ -25,6 +26,7 @@ const AuthContext = createContext<IAuthProvider>({
   },
   logout: async () => {},
   setSession: async () => {},
+  isAdmin: false,
 });
 
 const parseJwt = (token: string) => {
@@ -42,37 +44,52 @@ export const useAuth = () => {
 };
 
 const AuthProvider = memo(({ children }: { children: ReactNode }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [token, setToken] = useState<string>(
     localStorage.getItem(TOKEN_KEY) || ''
   );
+  const isAdmin = useMemo(() => user?.role === 'admin', [user]);
 
   const setSession = useCallback(async (token: string, user: User | null) => {
-    const { exp, id } = parseJwt(token);
-    const expiresAt = parseExp(exp);
-    const validToken = expiresAt > new Date();
+    try {
+      setLoading(true);
+      if (token) {
+        const { exp, id, role } = parseJwt(token);
+        const expiresAt = parseExp(exp);
+        const validToken = expiresAt > new Date();
 
-    if (validToken) {
-      localStorage.setItem(TOKEN_KEY, token);
-    } else {
-      localStorage.removeItem(TOKEN_KEY);
-      token = '';
+        if (validToken) {
+          localStorage.setItem(TOKEN_KEY, token);
+          api.setAuthToken(token);
+          setToken(token);
+
+          if (!user && validToken) {
+            user = await userApi.getUser(id);
+            delete user.password;
+          }
+          setUser(user);
+          switch (role) {
+            case 'admin':
+              navigate('/admin');
+              break;
+            case 'user':
+              navigate('/user');
+              break;
+          }
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+          token = '';
+        }
+      }
+    } catch (error) {
+      setError('Error occured when setting session');
+      throw error;
+    } finally {
+      setLoading(false);
     }
-
-    api.setAuthToken(token);
-    setToken(token);
-
-    if (!user && validToken) {
-      user = await userApi.getUser(id);
-      delete user.password;
-    }
-    setUser(user);
-
-    /* if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } */
   }, []);
 
   useEffect(() => {
@@ -111,8 +128,9 @@ const AuthProvider = memo(({ children }: { children: ReactNode }) => {
       login,
       logout,
       setSession,
+      isAdmin,
     };
-  }, [user, loading, error, token, login, logout, setSession]);
+  }, [user, loading, error, token, login, logout, setSession, isAdmin]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 });

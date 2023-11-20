@@ -1,12 +1,16 @@
+import { memo } from 'react';
 import { useAuth } from '../../context/auth/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
-  const { user } = useAuth();
+const Dashboard = memo(() => {
+  const { isAdmin, loading } = useAuth();
+  const navigate = useNavigate();
 
-  if (!user) {
-    return <div>Loading...</div>;
+  if (loading) {
+    if (!isAdmin) navigate('/login');
   }
+
   return <div>Dashboard</div>;
-};
+});
 
 export default Dashboard;
