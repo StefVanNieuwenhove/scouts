@@ -11,11 +11,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: [
+  /* origin: [
     'http://localhost:5173',
     'http://localhost:4173',
     'https://scouts-orcin.vercel.app',
-  ], // Replace with your client's actual origin
+  ], // Replace with your client's actual origin */
   credentials: true, // Allow cookies to be sent with the request
 };
 
