@@ -3,12 +3,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DEV_DATABASE_URL")
 }
 
 model Lid {
-  lidnummer     String        @id @default(uuid())
+  lidnummer     String        @id 
   voornaam      String
   achternaam    String
   email         String        @unique
@@ -30,9 +30,9 @@ model Ouder {
   id         String        @id @default(uuid())
   voornaam   String
   achternaam String
-  email      String        @unique
+  email      String        
   functie    Ouder_functie @default(andere)
-  gsm        String        @unique
+  gsm        String        @unique 
   straat     String
   huisnummer String
   busnummer  String
@@ -54,7 +54,6 @@ model User {
   role        User_role     @default(kapoen)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt  
-  Vergadering Vergadering[]
 }
 
 model Vergadering {
@@ -67,7 +66,6 @@ model Vergadering {
   createdAt   DateTime        @default(now())
   updatedAt   DateTime      @updatedAt
   Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Vergadering_LidConstraint")
-  User        User            @relation(fields: [userUpdated], references: [id], map: "Vergadering_UserConstraint")
 
   @@index([lidnummer], map: "Vergadering_lidnummer_fkey")
   @@index([userUpdated], map: "Vergadering_userUpdated_fkey")

@@ -7,7 +7,7 @@ const auth = require('../middleware/auth');
 
 const SALT = process.env.SALT_ROUNDS || 10;
 const JWT_SECRET = process.env.JWT_SECRET || 'uzihdauhfkjerhkfjhkzjrhfkjerhfk';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1d';
 const JWT_ISSUER = process.env.JWT_ISSUER || 'scouts-server';
 const JWT_TOKEN = process.env.JWT_TOKEN || 'token';
 const NODE_ENV = process.env.NODE_ENV || 'development';
@@ -15,9 +15,27 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get('/', auth, async (req, res) => {
+router.get(
+  '/',
+  /* auth, */ async (req, res) => {
+    try {
+      const users = await prisma.user.findMany();
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  }
+);
+
+router.get('/age/:age', auth, async (req, res) => {
   try {
+    const { age } = req.params;
     const users = await prisma.user.findMany();
+    const res = users.filter((user) => {
+      const userAge =
+        new Date().getFullYear() - new Date(user.birthdate).getFullYear();
+      return userAge === age;
+    });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error });
@@ -116,7 +134,7 @@ router.post(
       .notEmpty()
       .withMessage('Password is required')
       .trim()
-      .isLength({ min: 6, max: 20 })
+      .isLength({ min: 5, max: 20 })
       .withMessage('Password must be between 6 and 20 characters'),
   ],
   async (req, res) => {
@@ -148,14 +166,18 @@ router.post(
       }
 
       const payload = {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+        },
       };
 
       const token = jwt.sign(payload, JWT_SECRET, {
-        expiresIn: 60 * 60,
+        expiresIn: JWT_EXPIRES_IN,
         issuer: JWT_ISSUER,
       });
 
@@ -189,6 +211,15 @@ router.put('/:id', async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ error });
+  }
+});
+
+router.delete('/logout', async (req, res) => {
+  try {
+    res.clearCookie(JWT_TOKEN);
+    res.status(200).json({ message: 'Logged out successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

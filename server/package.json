@@ -12,7 +12,10 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "build": "tsc -p . && npx prisma generate",
-    "prisma": "prisma migrate dev --name init"
+    "prisma": "prisma migrate dev --name init",
+    "studio": "npx prisma studio",
+    "db:push": "npx prisma db push",
+    "db:pull": "npx prisma db pull"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",
