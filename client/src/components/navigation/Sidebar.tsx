@@ -13,18 +13,27 @@ import { Link as LinkType } from '../../types';
 const Sidebar = memo(() => {
   const { hasPermission, user } = useAuth();
 
-  const [expanded, setExpanded] = useState<boolean>(true);
+  const [expanded, setExpanded] = useState<boolean>(false);
   const [active, setActive] = useState<string>('');
 
   return (
     <>
       <header>
+        {!expanded && (
+          <nav className='block sm:hidden text-xl pt-2 bg-teal-700'>
+            <button
+              onClick={() => setExpanded((prev) => !prev)}
+              className='p-1.5 text-gray-100 rounded-lg bg-accent-light hover:bg-accent-lighter'>
+              <PiArrowLineRightBold className='text-xl' />
+            </button>
+          </nav>
+        )}
         <aside
-          className={` bg-teal-700 text-white
+          className={`bg-teal-700 text-white 
             ${
               expanded
-                ? 'fixed top-0 left-0 z-40 w-64 h-screen transition-transform overflow-scroll xs:translate-x-0'
-                : 'fixed top-0 left-16 z-40 w-max px-4 py-6 flex flex-col justify-between items-center h-screen transition-transform -translate-x-full overflow-scroll xs:translate-x-0'
+                ? 'fixed top-0 left-0 z-40 w-64 h-screen transition-transform overflow-scroll sm:translate-x-0'
+                : 'fixed top-0 left-0 z-40 w-max px-4 py-6 flex flex-col justify-between items-center h-screen transition-transform -translate-x-full overflow-scroll sm:translate-x-0'
             }`}>
           <div className='flex flex-col gap-2 items-center'>
             <div
@@ -181,7 +190,7 @@ const Sidebar = memo(() => {
           </div>
         </aside>
       </header>
-      <main className='pl-24 pt-2 xs:pl-3'>
+      <main className='pl-24 pt-2'>
         <Outlet />
       </main>
     </>
