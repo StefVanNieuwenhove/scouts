@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <>
-      <main className='w-full h-screen'>
+      <main>
         <h1>hekjfhkzejhfkjzehkfjhekfhkzehfkzehfkj</h1>
       </main>
     </>
