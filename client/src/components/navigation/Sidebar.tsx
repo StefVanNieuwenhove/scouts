@@ -14,7 +14,7 @@ const Sidebar = memo(() => {
   const { hasPermission, user } = useAuth();
 
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [active, setActive] = useState<string>('home');
+  const [active, setActive] = useState<string>('');
 
   return (
     <>
@@ -37,7 +37,14 @@ const Sidebar = memo(() => {
                 }`}>
                 <h1 className='text-lg text-white font-bold overflow-wrap'>
                   {/* line-clamp-1 */}
-                  <Link to='/dashboard'>Scouts Ter Alwina</Link>
+                  <Link
+                    to='/dashboard'
+                    onClick={() => {
+                      setActive('');
+                      setExpanded(false);
+                    }}>
+                    Scouts Ter Alwina
+                  </Link>
                 </h1>
                 {expanded && (
                   <div>
@@ -65,7 +72,10 @@ const Sidebar = memo(() => {
               {aanwezighedenLinks.map(
                 (link: LinkType) =>
                   hasPermission(link.permission) && (
-                    <Link to={link.url} key={link.permission}>
+                    <Link
+                      to={link.url}
+                      key={link.permission}
+                      onClick={() => setExpanded(false)}>
                       <li
                         className={`flex p-3 my-1 items-center gap-3 text-gray-100 font-medium rounded-md cursor-pointer hover:bg-teal-800 transition-all
                 ${expanded ? 'w-56' : 'w-auto'}
@@ -92,7 +102,10 @@ const Sidebar = memo(() => {
               {rvbLinks.map(
                 (link: LinkType) =>
                   hasPermission(link.permission) && (
-                    <Link to={link.url} key={link.permission}>
+                    <Link
+                      to={link.url}
+                      key={link.permission}
+                      onClick={() => setExpanded(false)}>
                       <li
                         className={`flex p-3 my-1 items-center gap-3 text-gray-100 font-medium rounded-md cursor-pointer hover:bg-teal-800 transition-all
                 ${expanded ? 'w-56' : 'w-auto'}
@@ -119,7 +132,10 @@ const Sidebar = memo(() => {
                 </p>
 
                 {adminLinks.map((link: LinkType) => (
-                  <Link to={link.url} key={link.permission}>
+                  <Link
+                    to={link.url}
+                    key={link.permission}
+                    onClick={() => setExpanded(false)}>
                     <li
                       className={`flex p-3 my-1 items-center gap-3 text-gray-100 font-medium rounded-md cursor-pointer hover:bg-teal-800 transition-all
                 ${expanded ? 'w-56' : 'w-auto'}
@@ -141,7 +157,10 @@ const Sidebar = memo(() => {
             {/* default routes */}
             <ul>
               {defaultLinks.map((link: LinkType) => (
-                <Link to={link.url} key={link.permission}>
+                <Link
+                  to={link.url}
+                  key={link.permission}
+                  onClick={() => setExpanded(false)}>
                   <li
                     className={`flex p-3 my-1 items-center gap-3 text-gray-100 font-medium rounded-md cursor-pointer hover:bg-teal-800 transition-all
                 ${expanded ? 'w-56' : 'w-auto'}
