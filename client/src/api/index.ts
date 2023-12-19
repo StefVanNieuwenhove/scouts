@@ -1,13 +1,12 @@
 import axiosRoot from 'axios';
 
-//const BASE_URL = import.meta.env.VITE_SERVER_URL;
-const DEV_URL = import.meta.env.VITE_DEV_URL;
+const PROD_URL = import.meta.env.VITE_PROD_URL;
+//const DEV_URL = import.meta.env.VITE_DEV_URL;
 
 export const axios = axiosRoot.create({
-  baseURL: DEV_URL,
+  baseURL: PROD_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'http://localhost:5173',
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE ',
     'Access-Control-Allow-Headers':
