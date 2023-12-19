@@ -16,6 +16,7 @@ const corsOptions = {
     'http://localhost:4173',
     'https://scouts-orcin.vercel.app',
   ], // Replace with your client's actual origin */
+  origin: true,
   credentials: true, // Allow cookies to be sent with the request
 };
 
