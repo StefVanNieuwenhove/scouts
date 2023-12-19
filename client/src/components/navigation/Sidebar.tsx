@@ -11,7 +11,7 @@ import {
 import { Link as LinkType } from '../../types';
 
 const Sidebar = memo(() => {
-  const { hasPermission } = useAuth();
+  const { hasPermission, user } = useAuth();
 
   const [expanded, setExpanded] = useState<boolean>(false);
   const [active, setActive] = useState<string>('home');
@@ -20,7 +20,7 @@ const Sidebar = memo(() => {
     <>
       <header>
         <aside
-          className={` bg-teal-700
+          className={` bg-teal-700 text-white
             ${
               expanded
                 ? 'fixed top-0 left-0 z-40 w-64 h-screen transition-transform overflow-scroll sm:translate-x-0'
@@ -39,6 +39,12 @@ const Sidebar = memo(() => {
                   {/* line-clamp-1 */}
                   <Link to='/dashboard'>Scouts Ter Alwina</Link>
                 </h1>
+                {expanded && (
+                  <div>
+                    <p className='text-sm line-clamp-1'>Name: {user?.name}</p>
+                    <p className='text-sm line-clamp-1'>Role: {user?.role}</p>
+                  </div>
+                )}
               </div>
               <button
                 onClick={() => setExpanded((prev) => !prev)}
