@@ -5,13 +5,16 @@ CREATE TYPE "Vergadering_tak" AS ENUM ('kapoenen', 'wouters', 'jonggivers', 'giv
 CREATE TYPE "Ouder_functie" AS ENUM ('moeder', 'vader', 'voogd', 'grootouder', 'andere');
 
 -- CreateEnum
-CREATE TYPE "User_role" AS ENUM ('admin', 'kapoen', 'wouter', 'jonggiver', 'giver', 'jin');
+CREATE TYPE "User_role" AS ENUM ('admin', 'kapoen', 'wouter', 'jonggiver', 'giver', 'jin', 'groepsleiding', 'board', 'parent');
 
 -- CreateEnum
 CREATE TYPE "Lid_tak" AS ENUM ('kapoenen', 'wouters', 'jonggivers', 'givers', 'jins');
 
 -- CreateEnum
 CREATE TYPE "Lid_geslacht" AS ENUM ('man', 'vrouw', 'onbekend');
+
+-- CreateEnum
+CREATE TYPE "Kamp_type" AS ENUM ('overgangsweekend', 'paaskamp', 'zomerkamp_kort', 'zomerkamp_lang');
 
 -- CreateTable
 CREATE TABLE "Lid" (
@@ -27,6 +30,7 @@ CREATE TABLE "Lid" (
     "busnummer" TEXT NOT NULL,
     "postcode" TEXT NOT NULL,
     "gemeente" TEXT NOT NULL,
+    "rijksregisternummer" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -46,9 +50,10 @@ CREATE TABLE "Ouder" (
     "busnummer" TEXT NOT NULL,
     "postcode" TEXT NOT NULL,
     "gemeente" TEXT NOT NULL,
-    "lidnummer" TEXT NOT NULL,
+    "rijkregisternummer" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "lidnummer" TEXT NOT NULL,
 
     CONSTRAINT "Ouder_pkey" PRIMARY KEY ("id")
 );
@@ -80,11 +85,27 @@ CREATE TABLE "Vergadering" (
     CONSTRAINT "Vergadering_pkey" PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "Lid_email_key" ON "Lid"("email");
+-- CreateTable
+CREATE TABLE "Kamp" (
+    "id" TEXT NOT NULL,
+    "name" "Kamp_type" NOT NULL DEFAULT 'overgangsweekend',
+    "start_date" TIMESTAMP(3) NOT NULL,
+    "end_date" TIMESTAMP(3) NOT NULL,
+    "cost_per_day" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Kamp_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_KampToLid" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ouder_email_key" ON "Ouder"("email");
+CREATE UNIQUE INDEX "Lid_email_key" ON "Lid"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Ouder_gsm_key" ON "Ouder"("gsm");
@@ -101,6 +122,12 @@ CREATE INDEX "Vergadering_lidnummer_fkey" ON "Vergadering"("lidnummer");
 -- CreateIndex
 CREATE INDEX "Vergadering_userUpdated_fkey" ON "Vergadering"("userUpdated");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "_KampToLid_AB_unique" ON "_KampToLid"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_KampToLid_B_index" ON "_KampToLid"("B");
+
 -- AddForeignKey
 ALTER TABLE "Ouder" ADD CONSTRAINT "Ouder_LidConstraint" FOREIGN KEY ("lidnummer") REFERENCES "Lid"("lidnummer") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -108,4 +135,7 @@ ALTER TABLE "Ouder" ADD CONSTRAINT "Ouder_LidConstraint" FOREIGN KEY ("lidnummer
 ALTER TABLE "Vergadering" ADD CONSTRAINT "Vergadering_LidConstraint" FOREIGN KEY ("lidnummer") REFERENCES "Lid"("lidnummer") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Vergadering" ADD CONSTRAINT "Vergadering_UserConstraint" FOREIGN KEY ("userUpdated") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "_KampToLid" ADD CONSTRAINT "_KampToLid_A_fkey" FOREIGN KEY ("A") REFERENCES "Kamp"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_KampToLid" ADD CONSTRAINT "_KampToLid_B_fkey" FOREIGN KEY ("B") REFERENCES "Lid"("lidnummer") ON DELETE CASCADE ON UPDATE CASCADE;

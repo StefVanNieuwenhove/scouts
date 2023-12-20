@@ -15,7 +15,9 @@
     "prisma": "prisma migrate dev --name init",
     "studio": "npx prisma studio",
     "db:push": "npx prisma db push",
-    "db:pull": "npx prisma db pull"
+    "db:pull": "npx prisma db pull",
+    "seed": "node ./prisma/seeds.js",
+    "db:delete": "npx prisma migrate reset --force"
   },
   "dependencies": {
     "@prisma/client": "^5.4.2",

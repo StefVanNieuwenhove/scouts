@@ -80,7 +80,6 @@ model Kamp  {
   start_date  DateTime
   end_date    DateTime
   cost_per_day Float
-  price       Float
   createdAt  DateTime        @default(now())
   updatedAt  DateTime      @updatedAt
   leden     Lid[]

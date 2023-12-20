@@ -7,10 +7,9 @@ const prisma = new PrismaClient();
 
 router.get('/', async (req, res) => {
   try {
-    const sort = req.query.sort;
     const kampen = await prisma.kamp.findMany({
       orderBy: {
-        name: sort === 'true' ? 'asc' : 'desc',
+        name: 'asc',
       },
     });
     res.status(200).json(kampen);

@@ -168,7 +168,6 @@ router.post(
 
       const { email, password } = req.body;
       const includeToken = req.query.include_token;
-      console.log('includeToken', includeToken);
 
       const user = await prisma.user.findUnique({
         where: {
