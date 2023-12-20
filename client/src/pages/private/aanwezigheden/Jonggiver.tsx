@@ -1,5 +1,13 @@
+import { Tabs, Title } from '../../../components';
+import { components, links } from '../../../config/Jonggivers';
+
 const Jonggiver = () => {
-  return <div>Jonggiver</div>;
+  return (
+    <>
+      <Title>jonggivers</Title>
+      <Tabs links={links} components={components} />
+    </>
+  );
 };
 
 export default Jonggiver;

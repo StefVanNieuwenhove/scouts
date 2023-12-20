@@ -50,6 +50,7 @@ export type Camp = {
   name: 'overgangsweekend' | 'paaskamp' | 'zomerkamp_kort' | 'zomerkamp_lang';
   start_date: string;
   end_date: string;
+  total_days: number;
   cost_per_day: number;
   price: number;
   createAt: string;

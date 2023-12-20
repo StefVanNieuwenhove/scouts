@@ -12,7 +12,6 @@ import {
   Wouter,
   Members,
   Management,
-  Roles,
   Profile,
   Activities,
   HomePublic,
@@ -141,16 +140,6 @@ function App() {
                 <PrivateRoute>
                   <RoleBasedRoute route='admin'>
                     <Management />
-                  </RoleBasedRoute>
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path='roles'
-              element={
-                <PrivateRoute>
-                  <RoleBasedRoute route='admin'>
-                    <Roles />
                   </RoleBasedRoute>
                 </PrivateRoute>
               }

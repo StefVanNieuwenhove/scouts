@@ -1,6 +1,9 @@
-import { MdOutlineLogout, MdOutlinePedalBike } from 'react-icons/md';
+import {
+  MdOutlineLogout,
+  MdOutlinePedalBike,
+  MdOutlineManageAccounts,
+} from 'react-icons/md';
 import { GiKite, GiJesterHat, GiFootprint } from 'react-icons/gi';
-import { BsPersonVcard, BsTree } from 'react-icons/bs';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { ImStatsDots } from 'react-icons/im';
 import { LuBackpack } from 'react-icons/lu';
@@ -67,15 +70,9 @@ const adminLinks: Link[] = [
   },
   {
     url: 'admin/leiding',
-    name: 'Leiding',
-    icon: <BsTree className='text-white' />,
+    name: 'Leiding & RVB',
+    icon: <MdOutlineManageAccounts className='text-white text-lg' />,
     permission: 'admin/leiding',
-  },
-  {
-    url: 'admin/roles',
-    name: 'Roles',
-    icon: <BsPersonVcard className='text-white' />,
-    permission: 'admin/roles',
   },
   {
     url: 'admin/maandlijst',

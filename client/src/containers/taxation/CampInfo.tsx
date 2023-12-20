@@ -13,24 +13,17 @@ const CampInfo = () => {
 
   const formatDate = (date: string) => {
     const newDate = new Date(date);
-    return newDate.toLocaleDateString();
+    return newDate.toLocaleDateString('nl-BE');
   };
 
-  const calculateDays = (start: string, end: string) => {
-    const startDate = new Date(start);
-    const endDate = new Date(end);
-    const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
-
+  console.log(data);
   return (
     <>
       {isLoading && <p>Loading...</p>}
       {isError && <p>Error</p>}
       {data && (
-        <div className='w-full h-full mt-3'>
-          <table className='table-auto w-full'>
+        <div className='w-full mt-3 overflow-x-auto border rounded-lg'>
+          <table className='table-auto w-full min-w-xs'>
             <thead>
               <tr className='bg-slate-600 text-white '>
                 <th className='border px-4 py-2'>Naam</th>
@@ -43,18 +36,24 @@ const CampInfo = () => {
             <tbody>
               {data.map((camp: Camp) => (
                 <>
-                  <tr className='text-center hover:bg-gray-400'>
+                  <tr
+                    key={camp.id}
+                    className='text-center hover:bg-gray-400 xs:fixed'>
                     <td className='border px-4 py-2'>
                       {camp.name.replace('_', ' ')}
                     </td>
                     <td className='border px-4 py-2'>
-                      {formatDate(camp.start_date)} -{formatDate(camp.end_date)}
+                      {formatDate(camp.start_date)} -{' '}
+                      {formatDate(camp.end_date)}
                     </td>
                     <td className='border px-4 py-2'>
-                      {calculateDays(camp.start_date, camp.end_date)}
+                      {camp.total_days ? camp.total_days : 0}
                     </td>
                     <td className='border px-4 py-2'>{camp.cost_per_day}</td>
-                    <td className='border px-4 py-2'>{camp.price}</td>
+                    <td className='border px-4 py-2'>
+                      {camp.cost_per_day *
+                        (camp.total_days ? camp.total_days : 0)}
+                    </td>
                   </tr>
                 </>
               ))}

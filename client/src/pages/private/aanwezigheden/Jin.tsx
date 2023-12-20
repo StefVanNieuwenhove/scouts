@@ -1,5 +1,12 @@
+import { Tabs, Title } from '../../../components';
+import { components, links } from '../../../config/Jins';
 const Jin = () => {
-  return <div>Jin</div>;
+  return (
+    <>
+      <Title>jins</Title>
+      <Tabs links={links} components={components} />
+    </>
+  );
 };
 
 export default Jin;

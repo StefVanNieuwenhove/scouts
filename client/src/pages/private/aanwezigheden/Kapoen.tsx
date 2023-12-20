@@ -1,9 +1,11 @@
+import { Tabs, Title } from '../../../components';
+import { links, components } from '../../../config/Kapoenen';
+
 const Kapoen = () => {
   return (
     <>
-      <main className='w-full'>
-        <h1>Kapoenen</h1>
-      </main>
+      <Title>Kapoenen</Title>
+      <Tabs links={links} components={components} />
     </>
   );
 };

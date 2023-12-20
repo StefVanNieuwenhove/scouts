@@ -3,7 +3,7 @@ import { Camp } from '../types';
 
 export const getCamps = async (): Promise<Camp[]> => {
   try {
-    const camps = await axios.get('/camp?sort=true', { withCredentials: true });
+    const camps = await axios.get('/camp', { withCredentials: true });
     return camps.data;
   } catch (error) {
     console.log(error);

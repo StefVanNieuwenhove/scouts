@@ -1,4 +1,4 @@
-import { CampInfo, GenerateAttest, MembersTaxation } from '../components';
+import { CampInfo, GenerateAttest, MembersTaxation } from '../containers';
 
 const links = [
   {
