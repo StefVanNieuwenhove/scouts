@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -20,10 +20,12 @@ model Lid {
   busnummer     String
   postcode      String
   gemeente      String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  Ouder         Ouder[]
-  Vergadering   Vergadering[]
+  rijksregisternummer String
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+  ouder         Ouder[]
+  vergadering   Vergadering[]
+  kamp       Kamp[]
 }
 
 model Ouder {
@@ -38,9 +40,10 @@ model Ouder {
   busnummer  String
   postcode   String
   gemeente   String
+  rijkregisternummer String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime     @updatedAt
   lidnummer  String
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime     @updatedAt
   Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Ouder_LidConstraint")
 
   @@index([lidnummer], map: "Ouder_lidnummer_fkey")
@@ -52,8 +55,8 @@ model User {
   name        String
   password    String
   role        User_role     @default(kapoen)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt  
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt  
 }
 
 model Vergadering {
@@ -63,12 +66,24 @@ model Vergadering {
   tak         Vergadering_tak @default(kapoenen)
   userUpdated String
   lidnummer   String
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime      @updatedAt
+  created_at   DateTime        @default(now())
+  updated_at   DateTime      @updatedAt
   Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Vergadering_LidConstraint")
 
   @@index([lidnummer], map: "Vergadering_lidnummer_fkey")
   @@index([userUpdated], map: "Vergadering_userUpdated_fkey")
+}
+
+model Kamp  {
+  id         String          @id @default(uuid())
+  name       Kamp_type       @default(overgangsweekend)
+  start_date  DateTime
+  end_date    DateTime
+  cost_per_day Float
+  price       Float
+  created_at  DateTime        @default(now())
+  updated_at  DateTime      @updatedAt
+  leden     Lid[]
 }
 
 enum Vergadering_tak {
@@ -111,4 +126,11 @@ enum Lid_geslacht {
   man
   vrouw
   onbekend
+}
+
+enum Kamp_type {
+  overgangsweekend
+  paaskamp
+  zomerkamp_kort
+  zomerkamp_lang
 }

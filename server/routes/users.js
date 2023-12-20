@@ -19,7 +19,16 @@ router.get(
   '/',
   /* auth, */ async (req, res) => {
     try {
-      const users = await prisma.user.findMany();
+      const include = req.query.include_password;
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          password: include === 'true' ? true : false,
+        },
+      });
       res.status(200).json(users);
     } catch (error) {
       res.status(500).json({ error });
@@ -44,8 +53,19 @@ router.get('/age/:age', auth, async (req, res) => {
 
 router.get('/:id', auth, async (req, res) => {
   try {
+    const { id } = req.params;
+    const include = req.query.include_password;
     const user = await prisma.user.findUnique({
-      where: { id: req.params.id },
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        password: include === 'true' ? true : false,
+      },
     });
     res.status(200).json(user);
   } catch (error) {
@@ -147,6 +167,8 @@ router.post(
       }
 
       const { email, password } = req.body;
+      const includeToken = req.query.include_token;
+      console.log('includeToken', includeToken);
 
       const user = await prisma.user.findUnique({
         where: {
@@ -181,10 +203,12 @@ router.post(
         issuer: JWT_ISSUER,
       });
 
-      res.cookie(JWT_TOKEN, token, {
-        httpOnly: true,
-        secure: NODE_ENV === 'production',
-      });
+      if (includeToken === 'true') {
+        res.cookie(JWT_TOKEN, token, {
+          httpOnly: true,
+          secure: NODE_ENV === 'production',
+        });
+      }
 
       res.status(200).json({
         user: {
@@ -193,7 +217,7 @@ router.post(
           email: user.email,
           role: user.role,
         },
-        token,
+        token: includeToken === 'true' ? token : '',
       });
     } catch (err) {
       console.log(err);
