@@ -87,11 +87,11 @@ const AuthProvider = memo(({ children }: { children: ReactNode }) => {
   }, [token, setSession]);
 
   const login = useCallback(
-    async (email: string, password: string) => {
+    async (email: string, password: string, include_token: boolean) => {
       try {
         setLoading(true);
         setError('');
-        const { token, user } = await loginUser(email, password);
+        const { token, user } = await loginUser(email, password, include_token);
         setUser(user);
         await setSession(token);
         return navigate(`/dashboard`);
@@ -120,6 +120,7 @@ const AuthProvider = memo(({ children }: { children: ReactNode }) => {
   const logout = useCallback(async () => {
     await logoutUser();
     localStorage.removeItem(TOKEN_KEY);
+    setToken('');
   }, []);
 
   const hasPermission = useCallback(

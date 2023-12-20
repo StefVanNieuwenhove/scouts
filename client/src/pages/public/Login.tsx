@@ -9,6 +9,7 @@ const validationSchema = Yup.object({
     .email('Invalid email address')
     .required('Email is required'),
   password: Yup.string().required('Password is required'),
+  signedIn: Yup.boolean(),
 });
 
 const Login = () => {
@@ -18,11 +19,12 @@ const Login = () => {
     initialValues: {
       email: '',
       password: '',
+      signedIn: true,
     },
     validationSchema,
     onSubmit: async (values) => {
-      const { email, password } = values;
-      await login(email, password).then(() =>
+      const { email, password, signedIn } = values;
+      await login(email, password, signedIn).then(() =>
         handleReset({
           values: {
             email: '',
@@ -93,6 +95,21 @@ const Login = () => {
                   className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
                   required
                 />
+              </div>
+              <div className='flex items-center'>
+                <input
+                  type='checkbox'
+                  name='signedIn'
+                  id='signedIn'
+                  className='w-4 h-4'
+                  value={values.signedIn.toString()}
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor='signedIn'
+                  className='ml-2 text-sm font-medium text-gray-900'>
+                  Keep me signed in
+                </label>
               </div>
               <button
                 type='submit'
