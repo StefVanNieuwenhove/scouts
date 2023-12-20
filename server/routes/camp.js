@@ -9,11 +9,12 @@ router.get('/', async (req, res) => {
   try {
     const kampen = await prisma.kamp.findMany({
       orderBy: {
-        name: 'asc',
+        start_date: 'desc',
       },
     });
     res.status(200).json(kampen);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error });
   }
 });
@@ -44,12 +45,21 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.delete('/', async (req, res) => {
+  try {
+    const kamp = await prisma.kamp.deleteMany();
+    res.status(200).json(kamp);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+});
+
 router.delete('/:id', async (req, res) => {
   try {
     const kamp = await prisma.kamp.delete({
       where: { id: req.params.id },
     });
-    res.status(200).json(user);
+    res.status(200).json(kamp);
   } catch (error) {
     res.status(500).json({ error });
   }

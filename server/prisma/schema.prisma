@@ -79,6 +79,7 @@ model Kamp  {
   name       Kamp_type       @default(overgangsweekend)
   start_date  DateTime
   end_date    DateTime
+  total_days Int
   cost_per_day Float
   createdAt  DateTime        @default(now())
   updatedAt  DateTime      @updatedAt
