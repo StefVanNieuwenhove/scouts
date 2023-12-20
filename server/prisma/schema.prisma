@@ -21,8 +21,8 @@ model Lid {
   postcode      String
   gemeente      String
   rijksregisternummer String
-  created_at     DateTime      @default(now())
-  updated_at     DateTime      @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   ouder         Ouder[]
   vergadering   Vergadering[]
   kamp       Kamp[]
@@ -41,8 +41,8 @@ model Ouder {
   postcode   String
   gemeente   String
   rijkregisternummer String
-  created_at  DateTime      @default(now())
-  updated_at  DateTime     @updatedAt
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime     @updatedAt
   lidnummer  String
   Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Ouder_LidConstraint")
 
@@ -55,8 +55,8 @@ model User {
   name        String
   password    String
   role        User_role     @default(kapoen)
-  created_at   DateTime      @default(now())
-  updated_at   DateTime      @updatedAt  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt  
 }
 
 model Vergadering {
@@ -66,8 +66,8 @@ model Vergadering {
   tak         Vergadering_tak @default(kapoenen)
   userUpdated String
   lidnummer   String
-  created_at   DateTime        @default(now())
-  updated_at   DateTime      @updatedAt
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime      @updatedAt
   Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Vergadering_LidConstraint")
 
   @@index([lidnummer], map: "Vergadering_lidnummer_fkey")
@@ -81,8 +81,8 @@ model Kamp  {
   end_date    DateTime
   cost_per_day Float
   price       Float
-  created_at  DateTime        @default(now())
-  updated_at  DateTime      @updatedAt
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime      @updatedAt
   leden     Lid[]
 }
 
