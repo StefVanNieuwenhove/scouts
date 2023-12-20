@@ -22,11 +22,7 @@ export type Role =
 
 export type AuthProvider = {
   user: User | null;
-  login: (
-    email: string,
-    password: string,
-    include_token: boolean
-  ) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
   error: string;

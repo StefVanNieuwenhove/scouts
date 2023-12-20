@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import { getCamps } from '../../api/camp';
 import { Camp } from '../../types';
 
