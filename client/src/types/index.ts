@@ -22,7 +22,11 @@ export type Role =
 
 export type AuthProvider = {
   user: User | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (
+    email: string,
+    password: string,
+    include_token: boolean
+  ) => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
   error: string;
@@ -33,9 +37,25 @@ export type AuthProvider = {
   hasPermission: (route: string) => boolean;
 };
 
+export type ThemeProvider = {
+  theme: string;
+  toggleTheme: () => void;
+};
+
 export type Link = {
   url: string;
   name: string;
   icon: ReactNode;
   permission: string;
+};
+
+export type Camp = {
+  id: string;
+  name: 'overgangsweekend' | 'paaskamp' | 'zomerkamp_kort' | 'zomerkamp_lang';
+  start_date: string;
+  end_date: string;
+  cost_per_day: number;
+  price: number;
+  createAt: string;
+  updatedAt: string;
 };

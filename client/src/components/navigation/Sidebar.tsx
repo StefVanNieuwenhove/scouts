@@ -20,7 +20,7 @@ const Sidebar = memo(() => {
     <>
       <header>
         {!expanded && (
-          <nav className='block sm:hidden text-xl pt-2 bg-teal-700'>
+          <nav className='block sm:hidden text-xl py-2 bg-teal-700'>
             <button
               onClick={() => setExpanded((prev) => !prev)}
               className='p-1.5 text-gray-100 rounded-lg bg-accent-light hover:bg-accent-lighter'>
@@ -190,7 +190,7 @@ const Sidebar = memo(() => {
           </div>
         </aside>
       </header>
-      <main className='pl-24 pt-2'>
+      <main className='sm:pl-24 pt-2 px-2'>
         <Outlet />
       </main>
     </>

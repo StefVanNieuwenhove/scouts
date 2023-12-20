@@ -87,11 +87,11 @@ const AuthProvider = memo(({ children }: { children: ReactNode }) => {
   }, [token, setSession]);
 
   const login = useCallback(
-    async (email: string, password: string, include_token: boolean) => {
+    async (email: string, password: string) => {
       try {
         setLoading(true);
         setError('');
-        const { token, user } = await loginUser(email, password, include_token);
+        const { token, user } = await loginUser(email, password);
         setUser(user);
         await setSession(token);
         return navigate(`/dashboard`);

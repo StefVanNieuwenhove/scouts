@@ -16,6 +16,7 @@ import {
   Profile,
   Activities,
   HomePublic,
+  NotFound,
 } from './pages';
 import { Navbar, PrivateRoute, RoleBasedRoute, Sidebar } from './components';
 
@@ -168,6 +169,7 @@ function App() {
         </Route>
 
         {/* catch all routes */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   );

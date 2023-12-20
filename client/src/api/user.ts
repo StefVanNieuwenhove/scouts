@@ -17,14 +17,13 @@ export const getUser = async ({
 
 export const login = async (
   email: string,
-  password: string,
-  include_token: boolean
+  password: string
 ): Promise<{ user: User; token: string }> => {
   try {
-    const data = await axios.post(
-      `/user/login?include_token=${include_token}`,
-      { email, password }
-    );
+    const data = await axios.post(`/user/login?include_token=true`, {
+      email,
+      password,
+    });
     return data.data;
   } catch (error) {
     console.log(error);

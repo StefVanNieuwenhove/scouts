@@ -31,7 +31,7 @@ const aanwezighedenLinks: Link[] = [
   },
   {
     url: 'aanwezigheden/jonggiver',
-    name: 'Jonggiver',
+    name: 'Jonggivers',
     icon: <LuBackpack className='text-white' />,
     permission: 'aanwezigheden/jonggiver',
   },
