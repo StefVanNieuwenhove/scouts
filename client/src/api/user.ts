@@ -1,7 +1,6 @@
 import { axios } from '.';
 import { User } from '../types';
 
-// public api endpoints
 export const getUser = async ({
   id,
   include_password = false,
@@ -18,13 +17,13 @@ export const getUser = async ({
 
 export const login = async (
   email: string,
-  password: string
+  password: string,
+  include_token: boolean
 ): Promise<{ user: User; token: string }> => {
   try {
     const data = await axios.post(
-      '/user/login',
-      { email, password },
-      { withCredentials: true }
+      `/user/login?include_token=${include_token}`,
+      { email, password }
     );
     return data.data;
   } catch (error) {
@@ -53,13 +52,12 @@ export const register = async (
 };
 
 export const logout = async (): Promise<void> => {
-  await axios.delete('/user/logout');
-};
-
-// private api endpoints
-export const getEmployees = async (): Promise<User[]> => {
-  const employees = await axios.get('/user/employees', {
-    withCredentials: true,
-  });
-  return employees.data;
+  try {
+    await axios.delete('/user/logout', {
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
