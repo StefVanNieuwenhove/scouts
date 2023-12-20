@@ -1,10 +1,10 @@
 import axiosRoot from 'axios';
 
-//const PROD_URL = import.meta.env.VITE_PROD_URL;
-const DEV_URL = import.meta.env.VITE_DEV_URL;
+const PROD_URL = import.meta.env.VITE_PROD_URL;
+//const DEV_URL = import.meta.env.VITE_DEV_URL;
 
 export const axios = axiosRoot.create({
-  baseURL: DEV_URL,
+  baseURL: PROD_URL,
   headers: {
     'Content-Type': 'application/json',
     /* 'Access-Control-Allow-Credentials': 'true',
