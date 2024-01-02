@@ -1,12 +1,11 @@
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
 
-// all the routes
-const usersRouter = require('./users');
+const userRouter = require('./user');
 const campRouter = require('./camp');
 
-router.use('/user', usersRouter);
+router.use('/user', userRouter);
 router.use('/camp', campRouter);
 
 module.exports = router;

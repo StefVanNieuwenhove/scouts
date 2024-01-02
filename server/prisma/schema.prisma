@@ -3,115 +3,86 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Lid {
-  lidnummer     String        @id 
-  voornaam      String
-  achternaam    String
-  email         String        @unique
-  geboortedatum DateTime
-  tak           Lid_tak       @default(kapoenen)
-  geslacht      Lid_geslacht  @default(onbekend)
-  straat        String
-  huisnummer    String
-  busnummer     String
-  postcode      String
-  gemeente      String
-  rijksregisternummer String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  ouder         Ouder[]
-  vergadering   Vergadering[]
-  kamp       Kamp[]
+model Camps {
+  id           String    @id
+  name         Kamp_type @default(overgangsweekend)
+  start_date   DateTime
+  end_date     DateTime
+  cost_per_day Float
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  total_days   Int
+  members      Members[]
 }
 
-model Ouder {
-  id         String        @id @default(uuid())
-  voornaam   String
-  achternaam String
-  email      String        
-  functie    Ouder_functie @default(andere)
-  gsm        String        @unique 
-  straat     String
-  huisnummer String
-  busnummer  String
-  postcode   String
-  gemeente   String
-  rijkregisternummer String
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime     @updatedAt
-  lidnummer  String
-  Lid        Lid           @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Ouder_LidConstraint")
+model Members {
+  id              String        @id
+  member_id       String        @unique
+  firstname       String
+  lastname        String
+  date_of_birth   DateTime
+  group           Lid_tak       @default(kapoenen)
+  national_number String        @unique
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  parents         Parents[]
+  Vergadering     Vergadering[]
+  camps           Camps[]
+}
 
-  @@index([lidnummer], map: "Ouder_lidnummer_fkey")
+model Parents {
+  id                 String   @id
+  firstname          String
+  lastname           String
+  email              String
+  street             String
+  house_number       String
+  box_number         String?
+  zip_code           String
+  city               String
+  rijkregisternummer String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  member_id          String
+  members            Members  @relation(fields: [member_id], references: [id], onDelete: Cascade, map: "Ouder_MemberConstraint")
+
+  @@index([member_id], map: "Ouder_member_id_fkey")
 }
 
 model User {
-  id          String        @id @default(uuid())
-  email       String        @unique
-  name        String
-  password    String
-  role        User_role     @default(kapoen)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt  
+  id        String      @id @default(uuid())
+  email     String      @unique
+  name      String
+  password  String
+  role      User_role[] @default([kapoen])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model Vergadering {
-  id          String          @id @default(uuid())
+  id          String          @id
   titel       String
   datum       DateTime
   tak         Vergadering_tak @default(kapoenen)
   userUpdated String
-  lidnummer   String
   createdAt   DateTime        @default(now())
-  updatedAt   DateTime      @updatedAt
-  Lid         Lid             @relation(fields: [lidnummer], references: [lidnummer], onDelete: Cascade, map: "Vergadering_LidConstraint")
+  updatedAt   DateTime        @updatedAt
+  member_id   String
+  members     Members         @relation(fields: [member_id], references: [id], onDelete: Cascade, map: "Vergadering_MemberConstraint")
 
-  @@index([lidnummer], map: "Vergadering_lidnummer_fkey")
+  @@index([member_id], map: "Vergadering_member_id_fkey")
   @@index([userUpdated], map: "Vergadering_userUpdated_fkey")
 }
 
-model Kamp  {
-  id         String          @id @default(uuid())
-  name       Kamp_type       @default(overgangsweekend)
-  start_date  DateTime
-  end_date    DateTime
-  total_days Int
-  cost_per_day Float
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime      @updatedAt
-  leden     Lid[]
-}
-
-enum Vergadering_tak {
-  kapoenen
-  wouters
-  jonggivers
-  givers
-  jins
-}
-
-enum Ouder_functie {
-  moeder
-  vader
-  voogd
-  grootouder
-  andere
-}
-
-enum User_role {
-  admin
-  kapoen
-  wouter
-  jonggiver
-  giver
-  jin
-groepsleiding
-  board
-  parent
+enum Kamp_type {
+  overgangsweekend
+  paaskamp
+  zomerkamp_kort
+  zomerkamp_lang
 }
 
 enum Lid_tak {
@@ -122,15 +93,22 @@ enum Lid_tak {
   jins
 }
 
-enum Lid_geslacht {
-  man
-  vrouw
-  onbekend
+enum User_role {
+  admin
+  kapoen
+  wouter
+  jonggiver
+  giver
+  jin
+  groepsleiding
+  rvb
+  parent
 }
 
-enum Kamp_type {
-  overgangsweekend
-  paaskamp
-  zomerkamp_kort
-  zomerkamp_lang
+enum Vergadering_tak {
+  kapoenen
+  wouters
+  jonggivers
+  givers
+  jins
 }
