@@ -1,12 +1,12 @@
 require('dotenv').config();
-import express, { Request, Response } from 'express';
+import express, { Request, Response, Express } from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 
-const app = express();
+const app: Express = express();
 
 const PORT = process.env.PORT;
 
@@ -16,6 +16,7 @@ const corsOptions = {
 };
 
 // Middlewares
+app.use(express.static('public'));
 app.use(logger('dev'));
 app.use(cors(corsOptions));
 app.use(helmet());
