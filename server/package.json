@@ -14,7 +14,8 @@
     "prisma:format": "prisma format",
     "prisma:reset": "prisma migrate reset --force",
     "db:pull": "prisma db pull",
-    "db:push": "prisma db push"
+    "db:push": "prisma db push",
+    "db:seed": "ts-node ./prisma/seed.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -25,6 +26,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.10.6",
     "prisma": "^5.7.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
@@ -38,7 +40,6 @@
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0",
-    "ts-node": "^10.9.2"
+    "morgan": "^1.10.0"
   }
 }

@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Camps {
-  id           String    @id
+  id           String    @id @default(uuid())
   name         Kamp_type @default(overgangsweekend)
   start_date   DateTime
   end_date     DateTime
@@ -20,7 +20,7 @@ model Camps {
 }
 
 model Members {
-  id              String        @id
+  id              String        @id @default(uuid())
   member_id       String        @unique
   firstname       String
   lastname        String
@@ -30,21 +30,21 @@ model Members {
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   parents         Parents[]
-  Vergadering     Vergadering[]
+  activities     Activity[]
   camps           Camps[]
 }
 
 model Parents {
-  id                 String   @id
+  id                 String   @id @default(uuid())
   firstname          String
   lastname           String
-  email              String
+  email              String  @unique
   street             String
   house_number       String
   box_number         String?
   zip_code           String
   city               String
-  rijkregisternummer String
+  national_number String @unique
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
   member_id          String
@@ -55,7 +55,7 @@ model Parents {
 
 model User {
   id        String      @id @default(uuid())
-  email     String      @unique
+  email     String      @unique 
   name      String
   password  String
   role      User_role[] @default([kapoen])
@@ -63,7 +63,7 @@ model User {
   updatedAt DateTime    @updatedAt
 }
 
-model Vergadering {
+model Activity {
   id          String          @id
   titel       String
   datum       DateTime

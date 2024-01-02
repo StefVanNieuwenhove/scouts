@@ -113,16 +113,7 @@ router.post(
       .notEmpty()
       .withMessage('Role is required')
       .trim()
-      .isIn([
-        User_role.kapoen,
-        User_role.wouter,
-        User_role.jonggiver,
-        User_role.giver,
-        User_role.jin,
-        User_role.rvb,
-        User_role.admin,
-        User_role.groepsleiding,
-      ]),
+      .isIn(Object.values(User_role)),
   ],
   async (req: Request, res: Response) => {
     try {
