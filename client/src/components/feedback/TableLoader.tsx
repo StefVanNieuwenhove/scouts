@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container } from '..';
 
 const TableLoader = ({ cols, rows }: { cols: number; rows: number }) => {

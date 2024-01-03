@@ -16,29 +16,36 @@ const validationSchema = Yup.object({
 });
 
 const Form = () => {
-  const { values, handleChange, handleSubmit, handleReset, errors, touched } =
-    useFormik({
-      initialValues: {
-        firstname: '',
-        lastname: '',
-        id: '',
-        dateOfBirth: '',
-        tak: '',
-        rijksregisternummer: '',
-      },
-      validationSchema,
-      onSubmit: async (values) => {
-        //console.log(values);
-        await createMember({
-          voornaam: values.firstname,
-          achternaam: values.lastname,
-          lidnummer: values.id,
-          geboortedatum: values.dateOfBirth,
-          tak: values.tak.toLowerCase() as Tak,
-          rijksregisternummer: values.rijksregisternummer,
-        }).catch((err) => console.log(err));
-      },
-    });
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    handleReset,
+    errors,
+    touched,
+    handleBlur,
+  } = useFormik({
+    initialValues: {
+      firstname: '',
+      lastname: '',
+      id: '',
+      dateOfBirth: '',
+      tak: '',
+      rijksregisternummer: '',
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      //console.log(values);
+      await createMember({
+        voornaam: values.firstname,
+        achternaam: values.lastname,
+        lidnummer: values.id,
+        geboortedatum: values.dateOfBirth,
+        tak: values.tak.toLowerCase() as Tak,
+        rijksregisternummer: values.rijksregisternummer,
+      }).catch((err) => console.log(err));
+    },
+  });
 
   return (
     <>
@@ -59,6 +66,7 @@ const Form = () => {
             error={
               errors.firstname && touched.firstname ? errors.firstname : ''
             }
+            onBlur={handleBlur}
           />
           <TextField
             type='text'
@@ -68,6 +76,7 @@ const Form = () => {
             onChange={handleChange}
             placeholder=''
             error={errors.lastname && touched.lastname ? errors.lastname : ''}
+            onBlur={handleBlur}
           />
           <TextField
             type='date'
@@ -81,6 +90,7 @@ const Form = () => {
                 ? errors.dateOfBirth
                 : ''
             }
+            onBlur={handleBlur}
           />
           <TextField
             type='text'
@@ -94,6 +104,7 @@ const Form = () => {
                 ? errors.rijksregisternummer
                 : ''
             }
+            onBlur={handleBlur}
           />
           <TextField
             type='text'
@@ -103,6 +114,7 @@ const Form = () => {
             onChange={handleChange}
             placeholder=''
             error={errors.id && touched.id ? errors.id : ''}
+            onBlur={handleBlur}
           />
           <SelectField
             name='tak'
