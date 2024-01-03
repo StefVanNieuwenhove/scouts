@@ -1,5 +1,5 @@
 const CreateActivity = ({ group }: { group: string }) => {
-  return <div>CreateActivity + {group} </div>;
+  return <></>;
 };
 
 export default CreateActivity;

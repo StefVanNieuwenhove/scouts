@@ -3,6 +3,7 @@ import { useAuth } from '../../context';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { TextField } from '../../components';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -14,7 +15,17 @@ const validationSchema = Yup.object({
 const Login = () => {
   const { login, isSignedIn } = useAuth();
   const navigate = useNavigate();
-  const { handleSubmit, handleChange, handleReset, values } = useFormik({
+  const {
+    isSubmitting,
+    handleSubmit,
+    handleChange,
+    handleReset,
+    values,
+    errors,
+    setErrors,
+    handleBlur,
+    touched,
+  } = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -22,14 +33,18 @@ const Login = () => {
     validationSchema,
     onSubmit: async (values) => {
       const { email, password } = values;
-      await login(email, password).then(() =>
-        handleReset({
-          values: {
-            email: '',
-            password: '',
-          },
-        })
-      );
+      await login(email, password)
+        .then(() =>
+          handleReset({
+            values: {
+              email: '',
+              password: '',
+            },
+          })
+        )
+        .catch(() => {
+          setErrors({ email: 'invalid email', password: 'invalid password' });
+        });
     },
   });
 
@@ -52,7 +67,7 @@ const Login = () => {
           />
           Scouts Ter Alwina
         </a>
-        <div className='w-full bg-white rounded-lg border-lime-500 border shadow md:mt-0 sm:max-w-md xl:p-0'>
+        <div className='w-full bg-white rounded-lg border-teal-600 border shadow md:mt-0 sm:max-w-md xl:p-0'>
           <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
             <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl'>
               Sign in to your account
@@ -61,43 +76,35 @@ const Login = () => {
               className='space-y-4 md:space-y-6'
               onSubmit={(e) => handleSubmit(e)}>
               <div>
-                <label
-                  htmlFor='email'
-                  className='block mb-2 text-sm font-medium text-gray-900'>
-                  Your email
-                </label>
-                <input
+                <TextField
                   type='email'
-                  name='email'
-                  id='email'
                   value={values.email}
+                  name='email'
+                  label='Email'
                   onChange={handleChange}
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
-                  placeholder='name@company.com'
-                  required
+                  error={errors.email && touched.email ? errors.email : ''}
+                  placeholder=''
+                  onBlur={handleBlur}
                 />
               </div>
               <div>
-                <label
-                  htmlFor='password'
-                  className='block mb-2 text-sm font-medium text-gray-900'>
-                  Password
-                </label>
-                <input
+                <TextField
                   type='password'
                   name='password'
-                  id='password'
                   value={values.password}
                   onChange={handleChange}
                   placeholder='••••••••'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5'
-                  required
+                  label='Password'
+                  error={
+                    errors.password && touched.password ? errors.password : ''
+                  }
+                  onBlur={handleBlur}
                 />
               </div>
               <button
                 type='submit'
-                className='w-full text-white bg-lime-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'>
-                Sign in
+                className='w-full text-white bg-teal-600 hover:bg-primary-700 focus:ring-1 focus:bg-teal-700 focus:outline-none focus:underline font-medium rounded-lg text-sm px-5 py-2.5 text-center'>
+                {isSubmitting ? 'Loading...' : 'Sign in'}
               </button>
             </form>
           </div>

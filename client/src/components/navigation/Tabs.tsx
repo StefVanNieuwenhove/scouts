@@ -10,12 +10,12 @@ const Tabs = ({
   const [value, setValue] = useState(links[0].url);
   return (
     <>
-      <nav className='w-full h-max bg-teal-600 text-white uppercase py-3 rounded-md'>
+      <nav className='w-full h-max bg-teal-700 text-white uppercase py-4 rounded-md'>
         <ul className='flex flex-col gap-2 sm:flex-row  items-center justify-around'>
           {links.map((link) => (
             <li
               key={link.name}
-              className={`hover:cursor-pointer  ${
+              className={`hover:cursor-pointer text-center overflow-clip  ${
                 value === link.url ? 'border-b-2 border-white' : ''
               }`}
               onClick={() => setValue(link.url)}>

@@ -157,7 +157,7 @@ const AuthProvider = memo(({ children }: { children: ReactNode }) => {
         ],
         board: ['dashboard', 'rvb/fiscaliteit'],
       };
-      return rolePermissions[user.role].includes(route);
+      return user?.role.some((role) => rolePermissions[role]?.includes(route));
     },
     [user]
   );

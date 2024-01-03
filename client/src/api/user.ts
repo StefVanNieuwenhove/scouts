@@ -1,6 +1,13 @@
 import { axios } from '.';
 import { User } from '../types';
 
+export const getUsers = async (include_password?: boolean): Promise<User[]> => {
+  const user = await axios.get(`user?include_password=${include_password}`, {
+    withCredentials: true,
+  });
+  return user.data;
+};
+
 export const getUser = async ({
   id,
   include_password = false,

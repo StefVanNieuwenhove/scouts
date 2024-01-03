@@ -16,6 +16,7 @@ import {
   Activities,
   HomePublic,
   NotFound,
+  Parents,
 } from './pages';
 import { Navbar, PrivateRoute, RoleBasedRoute, Sidebar } from './components';
 
@@ -135,7 +136,17 @@ function App() {
               }
             />
             <Route
-              path='leiding'
+              path='ouders'
+              element={
+                <PrivateRoute>
+                  <RoleBasedRoute route='admin'>
+                    <Parents />
+                  </RoleBasedRoute>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path='management'
               element={
                 <PrivateRoute>
                   <RoleBasedRoute route='admin'>

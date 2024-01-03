@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCamps } from '../../api/camp';
 import { Camp } from '../../types';
+import { TableLoader } from '../../components';
 
 const CampInfo = () => {
   const { data, isLoading, isError } = useQuery({
@@ -16,10 +17,9 @@ const CampInfo = () => {
     return newDate.toLocaleDateString('nl-BE');
   };
 
-  console.log(data);
   return (
     <>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <TableLoader cols={5} rows={4} />}
       {isError && <p>Error</p>}
       {data && (
         <div className='w-full mt-3 overflow-x-auto border rounded-lg'>
@@ -34,7 +34,7 @@ const CampInfo = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((camp: Camp) => (
+              {data?.map((camp: Camp) => (
                 <>
                   <tr
                     key={camp.id}
@@ -57,6 +57,15 @@ const CampInfo = () => {
                   </tr>
                 </>
               ))}
+              {data?.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className='border px-4 py-2 text-center uppercase underline font-bold'>
+                    Geen kampen gevonden
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

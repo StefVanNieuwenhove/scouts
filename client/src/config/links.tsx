@@ -2,12 +2,12 @@ import {
   MdOutlineLogout,
   MdOutlinePedalBike,
   MdOutlineManageAccounts,
+  MdOutlineSpaceDashboard,
 } from 'react-icons/md';
 import { GiKite, GiJesterHat, GiFootprint } from 'react-icons/gi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
-import { ImStatsDots } from 'react-icons/im';
 import { LuBackpack } from 'react-icons/lu';
-import { RiAccountCircleLine } from 'react-icons/ri';
+import { RiAccountCircleLine, RiParentLine } from 'react-icons/ri';
 import { PiCertificate } from 'react-icons/pi';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { Link } from '../types';
@@ -16,7 +16,7 @@ const aanwezighedenLinks: Link[] = [
   {
     url: 'aanwezigheden',
     name: 'Dashboard',
-    icon: <ImStatsDots className='text-white' />,
+    icon: <MdOutlineSpaceDashboard className='text-white text-lg' />,
     //permission: ['admin', 'groepsleiding', 'board'],
     permission: 'aanwezigheden',
   },
@@ -69,7 +69,13 @@ const adminLinks: Link[] = [
     permission: 'admin/leden',
   },
   {
-    url: 'admin/leiding',
+    url: 'admin/ouders',
+    name: 'Ouders',
+    icon: <RiParentLine className='text-white' />,
+    permission: 'admin/ouders',
+  },
+  {
+    url: 'admin/management',
     name: 'Leiding & RVB',
     icon: <MdOutlineManageAccounts className='text-white text-lg' />,
     permission: 'admin/leiding',

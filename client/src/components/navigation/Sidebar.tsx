@@ -11,14 +11,20 @@ import {
 import { Link as LinkType } from '../../types';
 
 const Sidebar = memo(() => {
-  const { hasPermission, user } = useAuth();
+  const { hasPermission } = useAuth();
 
   const [expanded, setExpanded] = useState<boolean>(false);
   const [active, setActive] = useState<string>('');
 
   return (
     <>
-      <header>
+      <header
+        onMouseEnter={() => {
+          setTimeout(() => {
+            setExpanded(true);
+          }, 200);
+        }}
+        onMouseLeave={() => setExpanded(false)}>
         {!expanded && (
           <nav className='block sm:hidden text-xl py-2 bg-teal-700'>
             <button
@@ -44,7 +50,7 @@ const Sidebar = memo(() => {
                 className={`flex flex-col gap-2 justify-between overflow-hidden transition-all ${
                   expanded ? 'w-36' : 'w-0'
                 }`}>
-                <h1 className='text-lg text-white font-bold overflow-wrap'>
+                <h1 className='text-lg text-white font-bold  my-1'>
                   {/* line-clamp-1 */}
                   <Link
                     to='/dashboard'
@@ -55,12 +61,17 @@ const Sidebar = memo(() => {
                     Scouts Ter Alwina
                   </Link>
                 </h1>
-                {expanded && (
+                {/* {expanded && (
                   <div>
                     <p className='text-sm line-clamp-1'>Name: {user?.name}</p>
-                    <p className='text-sm line-clamp-1'>Role: {user?.role}</p>
+                    <p className='text-sm line-clamp-1'>
+                      Role:{' '}
+                      {user?.role.map((role) => (
+                        <span>{role} </span>
+                      ))}
+                    </p>
                   </div>
-                )}
+                )} */}
               </div>
               <button
                 onClick={() => setExpanded((prev) => !prev)}
@@ -75,13 +86,15 @@ const Sidebar = memo(() => {
             <span className='w-full border'></span>
             {/* aanwezigheden routes */}
             <ul className='py-2 border-b border-white '>
-              <p className='text-white font-bold text-center text-lg'>
-                {expanded && 'Aanwezigheden'}
+              <p
+                className={`text-white font-bold text-center text-lg line-clamp-1`}>
+                {expanded ? 'Aanwezigheden' : ' '}
               </p>
               {aanwezighedenLinks.map(
                 (link: LinkType) =>
                   hasPermission(link.permission) && (
                     <Link
+                      className='transititext-primary text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600'
                       to={link.url}
                       key={link.permission}
                       onClick={() => setExpanded(false)}>

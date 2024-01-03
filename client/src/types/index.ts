@@ -4,7 +4,8 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  role: Role;
+  role: Role[];
+  password?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -19,6 +20,8 @@ export type Role =
   | 'groepsleiding'
   | 'board'
   | 'parent';
+
+export type Tak = 'kapoenen' | 'wouters' | 'jonggivers' | 'givers' | 'jins';
 
 export type AuthProvider = {
   user: User | null;
@@ -55,4 +58,27 @@ export type Camp = {
   price: number;
   createAt: string;
   updatedAt: string;
+};
+
+export type Member = {
+  id?: string;
+  lidnummer: string;
+  voornaam: string;
+  achternaam: string;
+  geboortedatum: string;
+  tak: Tak;
+  rijksregisternummer: string;
+  createdAt?: string;
+  updatedAt?: string;
+  ouder?: Parent[];
+  vergadering?: Activity[];
+  kamp?: Camp[];
+};
+
+export type Parent = {
+  id: string;
+};
+
+export type Activity = {
+  id: string;
 };
