@@ -1,3 +1,4 @@
+import { Buffer } from 'buffer';
 import { ReactNode } from 'react';
 
 export type User = {
@@ -62,6 +63,8 @@ export type Camp = {
 
 export type MemberInfo = {
   id: string;
+  secret_key: Buffer;
+  iv: Buffer;
   createdAt?: string;
   updatedAt?: string;
   parents?: Parent[];

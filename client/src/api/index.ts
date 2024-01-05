@@ -7,8 +7,8 @@ export const axios = axiosRoot.create({
   baseURL: PROD_URL,
   headers: {
     'Content-Type': 'application/json',
-    /* 'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+    /*'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE ',
     'Access-Control-Allow-Headers':
       'Origin, X-Requested-With, Content-Type, Accept, Authorization', */

@@ -4,7 +4,9 @@ import { Member, MemberForm } from '../types';
 
 export const getMembers = async (): Promise<Member[]> => {
   try {
-    const members = await axios.get('member', { withCredentials: true });
+    const members = await axios.get('member?decrypt=true', {
+      withCredentials: true,
+    });
     return members.data;
   } catch (error) {
     const err = error as AxiosError;

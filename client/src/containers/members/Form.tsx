@@ -12,7 +12,6 @@ import { createMember, getRolesOfMembers } from '../../api/members';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Tak } from '../../types';
-import { AxiosError } from 'axios';
 
 const validationSchema = Yup.object({
   firstname: Yup.string().required('Voorname is verplicht'),
@@ -69,15 +68,14 @@ const Form = () => {
 
   const mutation = useMutation({
     mutationFn: createMember,
-    onError: (error: AxiosError) => {
-      const message = error.response?.data as string;
+    onError: () => {
       setSnackbar((prev) => ({
         ...prev,
         open: true,
-        message: message,
+        message: 'Error creating member',
         type: 'error',
       }));
-      handleReset({
+      /*   handleReset({
         values: {
           firstname: '',
           lastname: '',
@@ -86,7 +84,7 @@ const Form = () => {
           tak: '',
           rijksregisternummer: '',
         },
-      });
+      }); */
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['members'], exact: true });
