@@ -9,9 +9,6 @@ function encrypt(data) {
     const secret_key = crypto_1.default.randomBytes(32);
     // Create an initialization vector
     const iv = crypto_1.default.randomBytes(16);
-    if (iv.length !== 16) {
-        throw new Error('Invalid IV length');
-    }
     console.log({ iv });
     // Create a Cipher instance using AES-256-CBC algorithm
     const cipher = crypto_1.default.createCipheriv('aes-256-cbc', secret_key, iv);
@@ -27,9 +24,6 @@ function encrypt(data) {
 }
 exports.encrypt = encrypt;
 function decrypt(data, iv, secretKey) {
-    if (iv.length !== 16) {
-        throw new Error('Invalid IV length');
-    }
     // Create a Decipher instance using the same algorithm and key
     let decipher = crypto_1.default.createDecipheriv('aes-256-cbc', secretKey, iv);
     // Decrypt the data

@@ -12,9 +12,6 @@ function encrypt(data: string): EncryptedData {
   // Create an initialization vector
   const iv = crypto.randomBytes(16);
 
-  if (iv.length !== 16) {
-    throw new Error('Invalid IV length');
-  }
   console.log({ iv });
 
   // Create a Cipher instance using AES-256-CBC algorithm
@@ -33,10 +30,6 @@ function encrypt(data: string): EncryptedData {
 }
 
 function decrypt(data: string, iv: Buffer, secretKey: Buffer): string {
-  if (iv.length !== 16) {
-    throw new Error('Invalid IV length');
-  }
-
   // Create a Decipher instance using the same algorithm and key
   let decipher = crypto.createDecipheriv('aes-256-cbc', secretKey, iv);
 
