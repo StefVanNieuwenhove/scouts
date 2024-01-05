@@ -19,12 +19,13 @@ const Sidebar = memo(() => {
   return (
     <>
       <header
-        onMouseEnter={() => {
+      /* onMouseEnter={() => {
           setTimeout(() => {
             setExpanded(true);
           }, 200);
         }}
-        onMouseLeave={() => setExpanded(false)}>
+        onMouseLeave={() => setExpanded(false)} */
+      >
         {!expanded && (
           <nav className='block sm:hidden text-xl py-2 bg-teal-700'>
             <button
@@ -46,12 +47,11 @@ const Sidebar = memo(() => {
               className={`flex items-center justify-around transition-all ${
                 expanded ? 'w-full' : 'w-0'
               }`}>
-              <div
+              {/*<div
                 className={`flex flex-col gap-2 justify-between overflow-hidden transition-all ${
                   expanded ? 'w-36' : 'w-0'
                 }`}>
-                <h1 className='text-lg text-white font-bold  my-1'>
-                  {/* line-clamp-1 */}
+               <h1 className='text-lg text-white font-bold  my-1'>
                   <Link
                     to='/dashboard'
                     onClick={() => {
@@ -61,7 +61,7 @@ const Sidebar = memo(() => {
                     Scouts Ter Alwina
                   </Link>
                 </h1>
-                {/* {expanded && (
+                {expanded && (
                   <div>
                     <p className='text-sm line-clamp-1'>Name: {user?.name}</p>
                     <p className='text-sm line-clamp-1'>
@@ -71,11 +71,11 @@ const Sidebar = memo(() => {
                       ))}
                     </p>
                   </div>
-                )} */}
-              </div>
+                )} 
+              </div>*/}
               <button
                 onClick={() => setExpanded((prev) => !prev)}
-                className='p-1.5 text-gray-100 rounded-lg bg-accent-light hover:bg-accent-lighter'>
+                className='p-1.5 text-gray-100 text-center rounded-lg bg-accent-light hover:bg-accent-lighter'>
                 {expanded ? (
                   <PiArrowLineLeftBold className='text-xl' />
                 ) : (
@@ -83,7 +83,7 @@ const Sidebar = memo(() => {
                 )}
               </button>
             </div>
-            <span className='w-full border'></span>
+            <span className='w-full border' />
             {/* aanwezigheden routes */}
             <ul className='py-2 border-b border-white '>
               <p
