@@ -7,6 +7,8 @@ type TextFieldProps = {
   placeholder?: string;
   label: string;
   onBlur: React.FocusEventHandler<HTMLInputElement>;
+  helperText?: string;
+  required: boolean;
 };
 
 const TextField = ({
@@ -18,10 +20,13 @@ const TextField = ({
   placeholder,
   label,
   onBlur,
+  helperText,
+  required,
 }: TextFieldProps) => {
   return (
     <div className='relative z-0 mb-5 w-full group flex flex-col'>
       <input
+        required={required}
         type={type}
         name={name}
         value={value}
@@ -43,7 +48,10 @@ const TextField = ({
         } duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6`}>
         {label}
       </label>
-      <p className='mt-2 text-sm text-red-600'>{error}</p>
+      <span className={`text-xs ${error ? 'text-red-600' : 'text-slate-400'}`}>
+        {helperText}
+      </span>
+      <p className='mt-2 text-sm text-red-600'>{error ? error : ''}</p>
     </div>
   );
 };

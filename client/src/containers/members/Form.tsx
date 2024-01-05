@@ -116,7 +116,7 @@ const Form = () => {
       {data && (
         <Container className='mt-4'>
           <form
-            className='tabler-auto w-1/2 min-w-xs'
+            className='tabler-auto w-full md:w-2/3 min-w-sm p-4 mx-auto '
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
@@ -132,6 +132,8 @@ const Form = () => {
                 errors.firstname && touched.firstname ? errors.firstname : ''
               }
               onBlur={handleBlur}
+              helperText='Voornaam van het lid'
+              required
             />
             <TextField
               type='text'
@@ -142,6 +144,8 @@ const Form = () => {
               placeholder=''
               error={errors.lastname && touched.lastname ? errors.lastname : ''}
               onBlur={handleBlur}
+              helperText='Achternaam van het lid'
+              required
             />
             <TextField
               type='date'
@@ -156,6 +160,8 @@ const Form = () => {
                   : ''
               }
               onBlur={handleBlur}
+              helperText='Geboortedatum van het lid'
+              required
             />
             <TextField
               type='text'
@@ -170,6 +176,8 @@ const Form = () => {
                   : ''
               }
               onBlur={handleBlur}
+              helperText='Rijksregisternummer van het lid, lengte 11'
+              required
             />
             <TextField
               type='text'
@@ -180,6 +188,8 @@ const Form = () => {
               placeholder=''
               error={errors.id && touched.id ? errors.id : ''}
               onBlur={handleBlur}
+              helperText='Lidnummer van het lid, lengte 13'
+              required
             />
             <SelectField
               name='group'
@@ -187,6 +197,7 @@ const Form = () => {
               values={data}
               onChange={handleChange}
               error={errors.group && touched.group ? errors.group : ''}
+              helperText='Tak van het lid'
             />
             <div className='flex justify-between w-full'>
               <Button
