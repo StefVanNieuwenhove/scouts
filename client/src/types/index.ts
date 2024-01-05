@@ -60,25 +60,54 @@ export type Camp = {
   updatedAt: string;
 };
 
-export type Member = {
-  id?: string;
-  lidnummer: string;
-  voornaam: string;
-  achternaam: string;
-  geboortedatum: string;
-  tak: Tak;
-  rijksregisternummer: string;
+export type MemberInfo = {
+  id: string;
   createdAt?: string;
   updatedAt?: string;
-  ouder?: Parent[];
-  vergadering?: Activity[];
-  kamp?: Camp[];
+  parents?: Parent[];
+  activities?: Activity[];
+  camps?: Camp[];
 };
+
+export type MemberForm = {
+  member_id: string;
+  firstname: string;
+  lastname: string;
+  date_of_birth: string;
+  group: Tak;
+  national_number: string;
+};
+
+export type Member = MemberForm & MemberInfo;
 
 export type Parent = {
   id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  street: string;
+  huise_number: string;
+  box_number?: string;
+  zip_code: string;
+  city: string;
+  national_number: string;
+  createdAt: string;
+  updatedAt: string;
+  member_id?: string;
 };
 
 export type Activity = {
   id: string;
+  title: string;
+};
+
+export type SnackbarProps = {
+  open: boolean;
+  message: string;
+  //type: 'success' | 'error' | 'warning';
+  type: string;
+  autoHideDuration?: number;
+  position?: 'tl' | 'tr' | 'bl' | 'br';
+  onClose: () => void;
+  transition?: 'slide' | 'fade';
 };
