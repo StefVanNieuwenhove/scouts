@@ -5,6 +5,7 @@ import { Member, MemberForm } from '../types';
 export const getMembers = async (): Promise<Member[]> => {
   try {
     const members = await axios.get('member?decrypt=true', {
+      method: 'GET',
       withCredentials: true,
     });
     return members.data;

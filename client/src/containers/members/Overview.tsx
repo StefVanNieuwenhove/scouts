@@ -2,6 +2,7 @@ import { Member } from '../../types';
 import { getMembers } from '../../api/members';
 import { useQuery } from '@tanstack/react-query';
 import { Container, TableLoader } from '../../components';
+import { useCallback } from 'react';
 
 const Overview = () => {
   const { data, isLoading, error } = useQuery({
@@ -16,7 +17,7 @@ const Overview = () => {
     console.log(error);
   }
 
-  const calculateAge = (birthday: string) => {
+  const calculateAge = useCallback((birthday: string) => {
     const today = new Date();
     const birthDate = new Date(birthday);
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -27,14 +28,24 @@ const Overview = () => {
     }
 
     return age;
-  };
+  }, []);
+
+  const formatNationalNumber = useCallback((nationalNumber: string) => {
+    const firstPart = nationalNumber.substring(0, 2);
+    const secondPart = nationalNumber.substring(2, 4);
+    const thirdPart = nationalNumber.substring(4, 6);
+    const fourthPart = nationalNumber.substring(6, 9);
+    const fifthPart = nationalNumber.substring(9, 11);
+
+    return `${firstPart}.${secondPart}.${thirdPart}-${fourthPart}.${fifthPart}`;
+  }, []);
 
   return (
     <>
       {isLoading && <TableLoader cols={3} rows={5} />}
       {data && (
         <Container className='mt-3 overflow-x-auto border rounded-lg'>
-          <table className='table-auto w-full min-w-xs'>
+          <table className='table-auto border-collapse border-slate-600 w-full min-w-xs'>
             <thead>
               <tr className='bg-slate-600 text-white'>
                 <th className='border px-4 py-2'>Naam</th>
@@ -60,17 +71,14 @@ const Overview = () => {
                   <td className='border px-4 py-2'>
                     {member.firstname} {member.lastname}
                   </td>
-                  <td className='border px-4 flex flex-col'>
-                    <span>{calculateAge(member.date_of_birth)}</span>
-                    <span className='text-xs'>
-                      {new Date(member.date_of_birth).toLocaleDateString(
-                        'nl-BE'
-                      )}
-                    </span>
+                  <td className='border px-4 py-2'>
+                    {calculateAge(member.date_of_birth)}
                   </td>
                   <td className='border px-4 py-2'>{member.group}</td>
                   <td className='border px-4 py-2'>{member.member_id}</td>
-                  <td className='border px-4 py-2'>{member.national_number}</td>
+                  <td className='border px-4 py-2'>
+                    {formatNationalNumber(member.national_number)}
+                  </td>
                 </tr>
               ))}
             </tbody>
