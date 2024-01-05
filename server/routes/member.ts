@@ -10,10 +10,21 @@ router.get(
   '/',
   /* auth, */ async (req: Request, res: Response) => {
     try {
-      const members = await prisma.members.findMany();
-      members.forEach((member) => {
-        member.national_number = decrypt(member.national_number);
+      const decode: boolean = req.query.decrypt === 'true' ? true : false;
+      const members = await prisma.members.findMany({
+        orderBy: [
+          { group: 'asc' },
+          { lastname: 'asc' },
+          { firstname: 'asc' },
+          { date_of_birth: 'asc' },
+        ],
       });
+      if (decode) {
+        members.forEach((member) => {
+          member.national_number = decrypt(member.national_number);
+        });
+      }
+
       res.status(200).json(members);
     } catch (error) {
       console.log(error);
@@ -23,25 +34,11 @@ router.get(
 );
 
 router.get(
-  '/:id',
+  '/roles',
   /* auth, */ async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      const member = await prisma.members.findUnique({
-        where: {
-          id: id,
-        },
-      });
-
-      if (!member) {
-        return res.status(500).json('Member not found');
-      }
-
-      const decryptedNationalNumber = decrypt(member.national_number);
-
-      res
-        .status(200)
-        .json({ ...member, national_number: decryptedNationalNumber });
+      const roles = Object.values(Lid_tak);
+      res.status(200).json(roles);
     } catch (error) {
       res.status(500).json({ error });
     }
@@ -53,6 +50,7 @@ router.get(
   /* auth, */ async (req: Request, res: Response) => {
     try {
       const { group } = req.params;
+      const decode: boolean = req.query.decrypt === 'true' ? true : false;
 
       if (!Object.values(Lid_tak).includes(group as Lid_tak)) {
         return res.status(500).json('Invalid group');
@@ -66,10 +64,39 @@ router.get(
         },
       });
 
-      members.forEach((member) => {
-        member.national_number = decrypt(member.national_number);
-      });
+      if (decode) {
+        members.forEach((member) => {
+          member.national_number = decrypt(member.national_number);
+        });
+      }
       res.status(200).json(members);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  }
+);
+
+router.get(
+  '/:id',
+  /* auth, */ async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const decode: boolean = req.query.decrypt === 'true' ? true : false;
+      const member = await prisma.members.findUnique({
+        where: {
+          id: id,
+        },
+      });
+
+      if (!member) {
+        return res.status(500).json('Member not found');
+      }
+
+      if (decode) {
+        member.national_number = decrypt(member.national_number);
+      }
+
+      res.status(200).json(member);
     } catch (error) {
       res.status(500).json({ error });
     }

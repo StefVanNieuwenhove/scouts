@@ -47,10 +47,7 @@ model Parents {
   national_number String @unique
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
-  member_id          String
-  members            Members  @relation(fields: [member_id], references: [id], onDelete: Cascade, map: "Ouder_MemberConstraint")
-
-  @@index([member_id], map: "Ouder_member_id_fkey")
+  members            Members[]
 }
 
 model User {
@@ -66,17 +63,18 @@ model User {
 model Activity {
   id          String          @id
   titel       String
-  datum       DateTime
-  tak         Vergadering_tak @default(kapoenen)
+  date       DateTime
+  group         Vergadering_tak @default(kapoenen)
   userUpdated String
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
-  member_id   String
-  members     Members         @relation(fields: [member_id], references: [id], onDelete: Cascade, map: "Vergadering_MemberConstraint")
+  members     Members[]         
 
-  @@index([member_id], map: "Vergadering_member_id_fkey")
   @@index([userUpdated], map: "Vergadering_userUpdated_fkey")
 }
+
+
+
 
 enum Kamp_type {
   overgangsweekend

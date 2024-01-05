@@ -51,7 +51,7 @@ async function main() {
       {
         name: 'zomerkamp_lang',
         start_date: '2023-07-21T00:00:00.000Z',
-        end_date: '2023-07-30T00:00:00.000Z',
+        end_date: '2023-07-31T00:00:00.000Z',
         cost_per_day: 17.5,
         total_days: 10,
       },
