@@ -15,8 +15,9 @@ const corsOptions = {
   origin: true,
 };
 
+app.use(express.static('dist'));
+
 // Middlewares
-app.use(express.static('public'));
 app.use(logger('dev'));
 app.use(cors(corsOptions));
 app.use(helmet());
