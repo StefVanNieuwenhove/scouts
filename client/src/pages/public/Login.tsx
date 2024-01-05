@@ -85,6 +85,7 @@ const Login = () => {
                   error={errors.email && touched.email ? errors.email : ''}
                   placeholder=''
                   onBlur={handleBlur}
+                  required
                 />
               </div>
               <div>
@@ -99,6 +100,7 @@ const Login = () => {
                     errors.password && touched.password ? errors.password : ''
                   }
                   onBlur={handleBlur}
+                  required
                 />
               </div>
               <button
