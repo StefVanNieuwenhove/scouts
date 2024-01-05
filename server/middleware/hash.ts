@@ -14,7 +14,7 @@ const encryptionIV = crypto
   .createHash('sha512')
   .update(IV_SECRET)
   .digest('hex')
-  .substring(0, 16);
+  .substring(0, 12);
 
 const encrypt = (text: string) => {
   try {
@@ -26,16 +26,25 @@ const encrypt = (text: string) => {
     ).toString('base64');
   } catch (error) {
     console.error(error);
+    throw new Error('Error encrypting');
   }
 };
 
 const decrypt = (hash: string) => {
-  const buff = Buffer.from(hash, 'base64');
-  const decipher = crypto.createDecipheriv(HASH_ALGORITHM, key, encryptionIV);
-  return (
-    decipher.update(buff.toString('utf8'), 'hex', 'utf8') +
-    decipher.final('utf8')
-  );
+  try {
+    const buff = Buffer.from(hash, 'base64');
+    const decipher = crypto.createDecipheriv(HASH_ALGORITHM, key, encryptionIV);
+    let decrypted = decipher.update(buff.toString('utf8'), 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+    /* return (
+      decipher.update(buff.toString('utf8'), 'hex', 'utf8') +
+      decipher.final('utf8')
+    ); */
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error decrypting');
+  }
 };
 
 export { encrypt, decrypt };
