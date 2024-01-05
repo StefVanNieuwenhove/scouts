@@ -20,39 +20,41 @@ model Camps {
 }
 
 model Members {
-  id              String        @id @default(uuid())
-  member_id       String        @unique
+  id              String     @id @default(uuid())
+  member_id       String     @unique
   firstname       String
   lastname        String
   date_of_birth   DateTime
-  group           Lid_tak       @default(kapoenen)
-  national_number String        @unique
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  group           Lid_tak    @default(kapoenen)
+  national_number String     @unique
+  secret_key        Bytes     @unique
+  iv              Bytes      @unique    
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
   parents         Parents[]
-  activities     Activity[]
+  activities      Activity[]
   camps           Camps[]
 }
 
 model Parents {
-  id                 String   @id @default(uuid())
-  firstname          String
-  lastname           String
-  email              String  @unique
-  street             String
-  house_number       String
-  box_number         String?
-  zip_code           String
-  city               String
-  national_number String @unique
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  members            Members[]
+  id              String    @id @default(uuid())
+  firstname       String
+  lastname        String
+  email           String    @unique
+  street          String
+  house_number    String
+  box_number      String?
+  zip_code        String
+  city            String
+  national_number String    @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  members         Members[]
 }
 
 model User {
   id        String      @id @default(uuid())
-  email     String      @unique 
+  email     String      @unique
   name      String
   password  String
   role      User_role[] @default([kapoen])
@@ -63,18 +65,15 @@ model User {
 model Activity {
   id          String          @id
   titel       String
-  date       DateTime
-  group         Vergadering_tak @default(kapoenen)
+  date        DateTime
+  group       Vergadering_tak @default(kapoenen)
   userUpdated String
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
-  members     Members[]         
+  members     Members[]
 
   @@index([userUpdated], map: "Vergadering_userUpdated_fkey")
 }
-
-
-
 
 enum Kamp_type {
   overgangsweekend

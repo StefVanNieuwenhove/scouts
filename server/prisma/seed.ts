@@ -59,23 +59,6 @@ async function main() {
   });
 
   console.log(`Created ${camps.count} camps`);
-
-  // Create members
-  const members = await prisma.members.createMany({
-    data: [
-      {
-        firstname: 'Janne',
-        lastname: 'De Rouck',
-        date_of_birth: '2011-03-17T00:00:00.000Z',
-        member_id: '2011031701958',
-        group: 'jonggivers',
-        national_number: '11031713425',
-      },
-    ],
-    skipDuplicates: true,
-  });
-
-  console.log(`Created ${members.count} members`);
 }
 
 main()

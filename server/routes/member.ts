@@ -19,9 +19,19 @@ router.get(
           { date_of_birth: 'asc' },
         ],
       });
+
+      console.log(members);
+
       if (decode) {
         members.forEach((member) => {
-          member.national_number = decrypt(member.national_number);
+          if (member.national_number) {
+            const decrypted = decrypt(
+              member.national_number,
+              member.iv,
+              member.secret_key
+            );
+            member.national_number = decrypted;
+          }
         });
       }
 
@@ -64,11 +74,6 @@ router.get(
         },
       });
 
-      if (decode) {
-        members.forEach((member) => {
-          member.national_number = decrypt(member.national_number);
-        });
-      }
       res.status(200).json(members);
     } catch (error) {
       res.status(500).json({ error });
@@ -90,10 +95,6 @@ router.get(
 
       if (!member) {
         return res.status(500).json('Member not found');
-      }
-
-      if (decode) {
-        member.national_number = decrypt(member.national_number);
       }
 
       res.status(200).json(member);
@@ -149,10 +150,10 @@ router.post(
         return res.status(500).json('Member already exists');
       }
 
-      const encryptedNationalNumber = encrypt(req.body.national_number);
-      console.log(encryptedNationalNumber);
+      const { data, iv, secret_key } = encrypt(req.body.national_number);
+      console.log({ data, iv });
 
-      if (!encryptedNationalNumber) {
+      if (!data) {
         return res.status(500).json('Failed to encrypt national number');
       }
 
@@ -160,11 +161,14 @@ router.post(
         data: {
           ...req.body,
           date_of_birth: new Date(req.body.date_of_birth),
-          national_number: encryptedNationalNumber,
+          national_number: data,
+          secret_key: secret_key,
+          iv: iv,
         },
       });
       res.status(200).json(member);
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error });
     }
   }
