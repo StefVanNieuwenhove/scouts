@@ -29,8 +29,10 @@ const TextField = ({
         placeholder={placeholder}
         onBlur={onBlur}
         className={`lock py-2.5 px-0 w-full text-sm  ${
-          error ? 'text-red-600' : 'text-gray-900'
-        } bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-slate-600 peer placeholder-transparent`}
+          error
+            ? 'text-red-600 border-red-600'
+            : 'text-gray-900 border-gray-300'
+        } bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none peer placeholder-transparent`}
       />
       <label
         htmlFor={name}

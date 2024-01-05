@@ -1,66 +1,67 @@
+import { AxiosError } from 'axios';
 import { axios } from '.';
-import { Member } from '../types';
+import { Member, MemberForm } from '../types';
 
 export const getMembers = async (): Promise<Member[]> => {
   try {
-    const members = await axios.get('members', { withCredentials: true });
+    const members = await axios.get('member', { withCredentials: true });
     return members.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const err = error as AxiosError;
+    throw err;
   }
 };
 
 export const getMember = async (id: string): Promise<Member> => {
   try {
-    const member = await axios.get(`members/${id}`, { withCredentials: true });
+    const member = await axios.get(`member/${id}`, { withCredentials: true });
     return member.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const err = error as AxiosError;
+    throw err;
   }
 };
 
-export const getMembersByTak = async (tak: string): Promise<Member[]> => {
+export const getMembersByGroup = async (tak: string): Promise<Member[]> => {
   try {
-    const members = await axios.get(`members/tak/${tak}`, {
+    const members = await axios.get(`member/tak/${tak}`, {
       withCredentials: true,
     });
     return members.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const err = error as AxiosError;
+    throw err;
   }
 };
 
-export const getTakkenOfMembers = async (): Promise<string[]> => {
+export const getRolesOfMembers = async (): Promise<string[]> => {
   try {
-    const takken = await axios.get('members/takken', { withCredentials: true });
+    const takken = await axios.get('member/roles', { withCredentials: true });
     return takken.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const err = error as AxiosError;
+    throw err;
   }
 };
 
-export const createMember = async (member: Member): Promise<Member> => {
+export const createMember = async (member: MemberForm): Promise<Member> => {
   try {
     console.log(member);
-    const newMember = await axios.post('members', member, {
+    const newMember = await axios.post('member', member, {
       withCredentials: true,
     });
     return newMember.data;
   } catch (error) {
-    console.log(error);
-    throw error;
+    const err = error as AxiosError;
+    throw err;
   }
 };
 
 export const deleteMember = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`members/${id}`, { withCredentials: true });
+    await axios.delete(`member/${id}`, { withCredentials: true });
   } catch (error) {
-    console.log(error);
-    throw error;
+    const err = error as AxiosError;
+    throw err;
   }
 };

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { Spinner } from '..';
 
 const Tabs = ({
   links,
@@ -7,7 +8,13 @@ const Tabs = ({
   links: { name: string; url: string }[];
   components: { name: string; component: JSX.Element }[];
 }) => {
+  const [isPending, startTransition] = useTransition();
   const [value, setValue] = useState(links[0].url);
+
+  if (isPending) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <nav className='w-full h-max bg-teal-700 text-white uppercase py-4 rounded-md'>
@@ -18,7 +25,9 @@ const Tabs = ({
               className={`hover:cursor-pointer text-center overflow-clip  ${
                 value === link.url ? 'border-b-2 border-white' : ''
               }`}
-              onClick={() => setValue(link.url)}>
+              onClick={() => {
+                startTransition(() => setValue(link.url));
+              }}>
               {link.name}
             </li>
           ))}

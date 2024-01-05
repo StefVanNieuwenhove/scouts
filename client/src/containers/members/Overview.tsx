@@ -58,16 +58,19 @@ const Overview = () => {
               {data.map((member: Member) => (
                 <tr key={member.id} className='text-center hover:bg-gray-400'>
                   <td className='border px-4 py-2'>
-                    {member.voornaam} {member.achternaam}
+                    {member.firstname} {member.lastname}
                   </td>
-                  <td className='border px-4 py-2'>
-                    {calculateAge(member.geboortedatum)}
+                  <td className='border px-4 flex flex-col'>
+                    <span>{calculateAge(member.date_of_birth)}</span>
+                    <span className='text-xs'>
+                      {new Date(member.date_of_birth).toLocaleDateString(
+                        'nl-BE'
+                      )}
+                    </span>
                   </td>
-                  <td className='border px-4 py-2'>{member.tak}</td>
-                  <td className='border px-4 py-2'>{member.lidnummer}</td>
-                  <td className='border px-4 py-2'>
-                    {member.rijksregisternummer}
-                  </td>
+                  <td className='border px-4 py-2'>{member.group}</td>
+                  <td className='border px-4 py-2'>{member.member_id}</td>
+                  <td className='border px-4 py-2'>{member.national_number}</td>
                 </tr>
               ))}
             </tbody>

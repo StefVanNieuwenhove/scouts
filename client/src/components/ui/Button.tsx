@@ -5,7 +5,7 @@ type ButtonProps = {
   text: string;
   fullWidth?: boolean;
   rounded?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Button = ({
@@ -21,7 +21,7 @@ const Button = ({
     <>
       <button
         type={type}
-        onClick={() => onClick()}
+        onClick={onClick}
         className={`bg-${color} text-${text} ${fullWidth && 'w-full'} ${
           rounded && 'rounded'
         } px-4 py-3 mx-2 hover:underline`}>
