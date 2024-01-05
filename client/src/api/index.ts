@@ -1,7 +1,7 @@
 import axiosRoot from 'axios';
 
-//const URL = import.meta.env.VITE_PROD_URL;
-const URL = import.meta.env.VITE_DEV_URL;
+const URL = import.meta.env.VITE_PROD_URL;
+//const URL = import.meta.env.VITE_DEV_URL;
 
 export const axios = axiosRoot.create({
   baseURL: URL,
