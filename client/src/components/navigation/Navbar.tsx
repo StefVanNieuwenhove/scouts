@@ -14,6 +14,7 @@ const Navbar = memo(() => {
 
   return (
     <>
+      <Outlet />
       <aside
         className={`bg-teal-700 flex flex-col gap-2 h-screen overflow-scroll px-4 py-4 z-10 fixed left-0 top-0 ${
           navOpen ? 'w-64' : 'w-16'
@@ -39,10 +40,9 @@ const Navbar = memo(() => {
         <hr className='border border-white' />
         <nav className='h-full flex flex-col gap-4'>
           {Routes.map((item) => (
-            <>
+            <div key={item.name}>
               {hasAccess(item.access, ROLE) && (
                 <NavItem
-                  key={item.name}
                   item={item}
                   activeItem={activeItem}
                   setActiveItem={setActiveItem}
@@ -51,11 +51,10 @@ const Navbar = memo(() => {
                   subNavOpen={subNavOpen}
                 />
               )}
-            </>
+            </div>
           ))}
         </nav>
       </aside>
-      <Outlet />
     </>
   );
 });
@@ -78,7 +77,7 @@ const NavItem = ({
   subNavOpen: { name: string; open: boolean };
 }) => {
   return (
-    <div key={item.name}>
+    <>
       <button
         className={`w-full flex items-center justify-between gap-4 text-white hover:bg-teal-600 p-2 rounded-t-md ${
           activeItem === item.name ? 'bg-teal-600 border-b border-white' : ''
@@ -97,21 +96,19 @@ const NavItem = ({
           subNavOpen.open &&
           subNavOpen.name === item.name &&
           item.items?.map((subItem) => (
-            <>
+            <Link to={subItem.url} key={subItem.name}>
               {hasAccess(subItem.access, ROLE) && (
-                <Link to={subItem.url} key={subItem.name}>
-                  <li className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 last:rounded-b-md first:py-2 hover:cursor-pointer hover:underline'>
-                    <span>
-                      <MdArrowRight />
-                    </span>
-                    <p>{subItem.name}</p>
-                  </li>
-                </Link>
+                <li className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 last:rounded-b-md first:py-2 hover:cursor-pointer hover:underline'>
+                  <span>
+                    <MdArrowRight />
+                  </span>
+                  <p>{subItem.name}</p>
+                </li>
               )}
-            </>
+            </Link>
           ))}
       </ul>
-    </div>
+    </>
   );
 };
 
