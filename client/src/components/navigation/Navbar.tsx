@@ -99,10 +99,8 @@ const NavItem = ({
           item.items?.map((subItem) => (
             <>
               {hasAccess(subItem.access, ROLE) && (
-                <Link to={subItem.url}>
-                  <li
-                    key={subItem.name}
-                    className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 last:rounded-b-md first:py-2 hover:cursor-pointer hover:underline'>
+                <Link to={subItem.url} key={subItem.name}>
+                  <li className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 last:rounded-b-md first:py-2 hover:cursor-pointer hover:underline'>
                     <span>
                       <MdArrowRight />
                     </span>
