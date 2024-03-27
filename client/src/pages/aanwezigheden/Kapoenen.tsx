@@ -7,7 +7,7 @@ const Kapoenen = () => {
 
   //TODO data provider - use group param to fetch the data
   //FIXME mockdata is currently in use
-  const members = getMemebersByGroup(group || '');
+  const members = getMemebersByGroup();
 
   //TODO secure this with the correct roles of the users
   if (

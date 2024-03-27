@@ -1,4 +1,4 @@
-export const getMemebersByGroup = (group: string) => {
+export const getMemebersByGroup = () => {
   return [
     {
       firstname: 'test',
