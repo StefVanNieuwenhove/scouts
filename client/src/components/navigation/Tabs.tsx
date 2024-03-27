@@ -10,7 +10,7 @@ type TabsProps = {
 
 const Tabs = memo(({ pages, storageKey }: TabsProps) => {
   const [activePage, setActivePage] = useState(
-    localStorage.getItem(storageKey) || ''
+    localStorage.getItem(storageKey) || pages[0].name
   );
 
   const handleClick = useCallback(
