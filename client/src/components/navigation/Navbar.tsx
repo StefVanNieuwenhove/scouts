@@ -10,7 +10,7 @@ const ROLE = ['admin'];
 const Navbar = memo(() => {
   const [navOpen, setNavOpen] = useState(true);
   const [subNavOpen, setSubNavOpen] = useState({ name: '', open: true });
-  const [activeItem, setActiveItem] = useState(Routes[0].name);
+  const [activeItem, setActiveItem] = useState('');
 
   return (
     <>
@@ -40,18 +40,20 @@ const Navbar = memo(() => {
         <hr className='border border-white' />
         <nav className='h-full flex flex-col gap-4'>
           {Routes.map((item) => (
-            <div key={item.name}>
+            <>
               {hasAccess(item.access, ROLE) && (
                 <NavItem
+                  key={item.name}
                   item={item}
                   activeItem={activeItem}
                   setActiveItem={setActiveItem}
                   setSubNavOpen={setSubNavOpen}
                   navOpen={navOpen}
+                  setNavOpen={setNavOpen}
                   subNavOpen={subNavOpen}
                 />
               )}
-            </div>
+            </>
           ))}
         </nav>
       </aside>
@@ -67,17 +69,20 @@ const NavItem = ({
   setActiveItem,
   setSubNavOpen,
   navOpen,
+  setNavOpen,
   subNavOpen,
 }: {
+  key: string;
   item: Route;
   activeItem: string;
   setActiveItem: (name: string) => void;
   setSubNavOpen: (subNav: { name: string; open: boolean }) => void;
   navOpen: boolean;
+  setNavOpen: (name: boolean) => void;
   subNavOpen: { name: string; open: boolean };
 }) => {
   return (
-    <>
+    <div key={item.name}>
       <button
         className={`w-full flex items-center justify-between gap-4 text-white hover:bg-teal-600 p-2 rounded-t-md ${
           activeItem === item.name ? 'bg-teal-600 border-b border-white' : ''
@@ -87,7 +92,12 @@ const NavItem = ({
           setSubNavOpen({ name: item.name, open: true });
         }}>
         <div className='flex items-center gap-4'>
-          <span>{item.icon}</span>
+          <span
+            onClick={() => {
+              if (!navOpen) setNavOpen(true);
+            }}>
+            {item.icon}
+          </span>
           {navOpen && <span>{item.name}</span>}
         </div>
       </button>
@@ -98,7 +108,7 @@ const NavItem = ({
           item.items?.map((subItem) => (
             <Link to={subItem.url} key={subItem.name}>
               {hasAccess(subItem.access, ROLE) && (
-                <li className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 last:rounded-b-md first:py-2 hover:cursor-pointer hover:underline'>
+                <li className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 first:py-2 hover:cursor-pointer hover:underline'>
                   <span>
                     <MdArrowRight />
                   </span>
@@ -108,7 +118,7 @@ const NavItem = ({
             </Link>
           ))}
       </ul>
-    </>
+    </div>
   );
 };
 
