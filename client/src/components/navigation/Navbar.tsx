@@ -106,7 +106,10 @@ const NavItem = ({
           subNavOpen.open &&
           subNavOpen.name === item.name &&
           item.items?.map((subItem) => (
-            <Link to={subItem.url} key={subItem.name}>
+            <Link
+              to={subItem.url}
+              key={subItem.name}
+              onClick={() => setNavOpen(false)}>
               {hasAccess(subItem.access, ROLE) && (
                 <li className='flex items-center gap-2 bg-teal-600 text-white py-1 px-2 first:py-2 hover:cursor-pointer hover:underline'>
                   <span>
