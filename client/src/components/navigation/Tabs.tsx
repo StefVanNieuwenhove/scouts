@@ -23,11 +23,11 @@ const Tabs = memo(({ pages, storageKey }: TabsProps) => {
 
   return (
     <>
-      <nav className='w-full h-fit bg-teal-700 text-white flex items-center justify-around py-3 mb-2 rounded-md'>
+      <nav className='w-full h-fit bg-teal-700 text-white flex flex-col md:flex-row items-center justify-around py-2 mb-2 rounded-md'>
         {pages.map((page) => (
           <button
             onClick={() => handleClick(page.name)}
-            className={`hover:underline uppercase ${
+            className={`hover:underline uppercase py-1 ${
               activePage === page.name && 'underline'
             }`}>
             {page.name}
