@@ -27,27 +27,27 @@ const Routes: Route[] = [
       {
         name: 'Kapoenen',
         access: ['admin', 'groepsleiding', 'kapoenenleiding'],
-        url: '/kapoenen',
+        url: '/aanwezigheden/kapoenen',
       },
       {
         name: 'Wouters',
         access: ['admin', 'groepsleiding', 'wouterleiding'],
-        url: '/wouters',
+        url: '/aanwezigheden/wouters',
       },
       {
         name: 'Jonggivers',
         access: ['admin', 'groepsleiding', 'jonggiverleiding'],
-        url: '/jonggivers',
+        url: '/aanwezigheden/jonggivers',
       },
       {
         name: 'Givers',
         access: ['admin', 'groepsleiding', 'giverleiding'],
-        url: '/givers',
+        url: '/aanwezigheden/givers',
       },
       {
         name: 'Jins',
         access: ['admin', 'groepsleiding', 'jinleiding'],
-        url: '/jins',
+        url: '/aanwezigheden/jins',
       },
     ],
     access: [

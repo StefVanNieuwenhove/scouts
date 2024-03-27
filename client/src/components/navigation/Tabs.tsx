@@ -23,7 +23,7 @@ const Tabs = memo(({ pages, storageKey }: TabsProps) => {
 
   return (
     <>
-      <nav className='w-full h-fit bg-teal-700 text-white flex items-center justify-around py-3 rounded-md'>
+      <nav className='w-full h-fit bg-teal-700 text-white flex items-center justify-around py-3 mb-2 rounded-md'>
         {pages.map((page) => (
           <button
             onClick={() => handleClick(page.name)}

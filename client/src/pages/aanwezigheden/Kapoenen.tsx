@@ -1,10 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { Main, Tabs } from '../../components';
+import { Main, Table, TableData, TableRow, Tabs } from '../../components';
+import { getMemebersByGroup } from '../../api/aanwezigheden';
 
 const Kapoenen = () => {
   const { group } = useParams();
 
   //TODO data provider - use group param to fetch the data
+  //FIXME mockdata is currently in use
+  const members = getMemebersByGroup(group || '');
 
   //TODO secure this with the correct roles of the users
   if (
@@ -22,7 +25,26 @@ const Kapoenen = () => {
       <Tabs
         storageKey={'aanwezigheden'}
         pages={[
-          { name: 'overview', component: <p>Overview</p> },
+          {
+            name: 'overview',
+            component: (
+              <Table
+                headers={['voornaam', 'familienaam', 'voornaam', 'familienaam']}
+                body={
+                  <>
+                    {members.map((member) => (
+                      <TableRow>
+                        <TableData>{member.firstname}</TableData>
+                        <TableData>{member.lastname}</TableData>
+                        <TableData>{member.firstname}</TableData>
+                        <TableData>{member.lastname}</TableData>
+                      </TableRow>
+                    ))}
+                  </>
+                }
+              />
+            ),
+          },
           { name: 'create', component: <p>Create</p> },
           { name: 'update', component: <p>Update</p> },
           { name: 'stats', component: <p>Stats</p> },
