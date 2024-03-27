@@ -8,7 +8,7 @@ import { Link, Outlet } from 'react-router-dom';
 const ROLE = ['admin'];
 
 const Navbar = memo(() => {
-  const [navOpen, setNavOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
   const [subNavOpen, setSubNavOpen] = useState({ name: '', open: true });
   const [activeItem, setActiveItem] = useState('');
 
