@@ -34,8 +34,8 @@ const NavBar = () => {
   return (
     <>
       <header className='w-full py-2 px-4 flex items-center justify-between'>
-        <h1 className='hidden md:block'>Scouts Ter Alwina</h1>
-        <nav className='hidden md:flex'>
+        <h1 className='hidden lg:block'>Scouts Ter Alwina</h1>
+        <nav className='hidden lg:flex'>
           <NavigationMenu className='bg-transparent'>
             {Links.map((link) => (
               <NavigationMenuList key={link.name} className='px-2'>
@@ -48,7 +48,7 @@ const NavBar = () => {
                     {link.name}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className='w-[300px] p-4 flex flex-col'>
+                    <ul className='w-[800px] p-4 flex items-center justify-evenly'>
                       {link.sublinks.map((sub) => (
                         <Button
                           key={sub.href}
@@ -66,7 +66,7 @@ const NavBar = () => {
             ))}
           </NavigationMenu>
         </nav>
-        <span className='block md:hidden'>
+        <span className='block lg:hidden'>
           <Sheet open={open} onOpenChange={() => setOpen(!open)}>
             <SheetTrigger asChild>
               <Button variant={'ghost'} onClick={() => setOpen(true)}>
