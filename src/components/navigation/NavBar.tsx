@@ -19,53 +19,54 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
-
 import { Links as linksType } from '@/types/nav';
 import { usePathname } from 'next/navigation';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+} from '@clerk/nextjs';
+import { Sign } from 'crypto';
 
 const NavBar = () => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
   return (
     <>
       <header className='w-full py-2 px-4 flex items-center justify-between'>
-        <h1 className='hidden lg:block'>Scouts Ter Alwina</h1>
-        <nav className='hidden lg:flex'>
-          <NavigationMenu className='bg-transparent'>
-            {Links.map((link) => (
-              <NavigationMenuList key={link.name} className='px-2'>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className={` ${
-                      pathname.split('/')[1] === link.name.toLowerCase() &&
-                      'underline'
-                    }`}>
-                    {link.name}
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className='w-[800px] p-4 flex items-center justify-evenly'>
-                      {link.sublinks.map((sub) => (
-                        <Button
-                          key={sub.href}
-                          variant={'ghost'}
-                          className={`select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
-                            !sub.permission.includes('admin') && 'hidden'
-                          } ${pathname === sub.href && 'underline'}`}>
-                          <Link href={sub.href}>{sub.name}</Link>
-                        </Button>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            ))}
-          </NavigationMenu>
-        </nav>
+        <h1 className='hidden lg:block'>
+          <Link href='/'>Scouts Ter Alwina</Link>
+        </h1>
+        <NavigationMenu className='bg-transparent hidden lg:flex'>
+          {Links.map((link) => (
+            <NavigationMenuList
+              key={link.name}
+              className={`px-2 ${link.authenticaded && 'hidden'}`}>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>{link.name}</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className='w-[800px] p-4 flex items-center justify-evenly'>
+                    {link.sublinks.map((sub) => (
+                      <Button
+                        key={sub.href}
+                        variant={'link'}
+                        className={`select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
+                          !sub.permission.includes('admin') && 'hidden'
+                        } ${pathname === sub.href && 'underline'}`}>
+                        <Link href={sub.href}>{sub.name}</Link>
+                      </Button>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          ))}
+        </NavigationMenu>
         <span className='block lg:hidden'>
           <Sheet open={open} onOpenChange={() => setOpen(!open)}>
             <SheetTrigger asChild>
@@ -92,7 +93,15 @@ const NavBar = () => {
             </SheetContent>
           </Sheet>
         </span>
-        <ThemeToggle />
+        <div className='flex items-center justify-end space-x-4'>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <SignOutButton />
+          </SignedIn>
+          <ThemeToggle />
+        </div>
       </header>
       <Separator />
     </>

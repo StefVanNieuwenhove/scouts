@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/ui/theme-provider';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { ClerkProvider } from '@clerk/nextjs';
 import { NavBar } from '@/components';
+import { env } from '@/env';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,17 +19,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={`${inter.className}`}>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='light'
-          enableSystem
-          disableTransitionOnChange>
-          <NavBar />
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider
+      publishableKey={env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      signInUrl='/sign-in'
+      signUpUrl='/sign-up'>
+      <html lang='en'>
+        <body className={`${inter.className}`}>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='light'
+            enableSystem
+            disableTransitionOnChange>
+            <NavBar />
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

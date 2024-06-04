@@ -3,6 +3,7 @@ import { Links as linksType } from '@/types/nav';
 export const Links: linksType[] = [
   {
     name: 'Home',
+    authenticaded: false,
     sublinks: [
       {
         name: 'Nieuws',
@@ -33,6 +34,7 @@ export const Links: linksType[] = [
   },
   {
     name: 'Aanwezigheden',
+    authenticaded: true,
     sublinks: [
       {
         name: 'Kapoenen',
@@ -63,6 +65,7 @@ export const Links: linksType[] = [
   },
   {
     name: 'Raad Van Bestuur',
+    authenticaded: true,
     sublinks: [
       {
         name: 'Fiscale attesten',
@@ -78,6 +81,7 @@ export const Links: linksType[] = [
   },
   {
     name: 'Dashboard',
+    authenticaded: true,
     sublinks: [
       {
         name: 'Mijn kind',
@@ -98,6 +102,7 @@ export const Links: linksType[] = [
   },
   {
     name: 'Admin',
+    authenticaded: true,
     sublinks: [
       {
         name: 'Leden',
@@ -118,6 +123,7 @@ export const Links: linksType[] = [
   },
   {
     name: 'Account',
+    authenticaded: false,
     sublinks: [
       {
         name: 'Profiel',
@@ -127,11 +133,6 @@ export const Links: linksType[] = [
       {
         name: 'Settings',
         href: '/account/settings',
-        permission: ['admin'],
-      },
-      {
-        name: 'Logout',
-        href: '/logout',
         permission: ['admin'],
       },
     ],
