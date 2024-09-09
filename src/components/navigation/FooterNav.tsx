@@ -9,7 +9,7 @@ const FooterNav = () => {
       <div>
         <H3 className='underline'>Links</H3>
         <nav className='space-y-1 flex flex-col'>
-          <NavLink name='Home' href='/' />
+          <NavLink name='Home' href='/' className='w-fit' />
         </nav>
       </div>
       <div>
