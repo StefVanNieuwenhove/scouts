@@ -2,6 +2,7 @@ import React from 'react';
 import { H3 } from '../typography';
 import { Mail, MapPin } from 'lucide-react';
 import NavLink from './NavLink';
+import { navigation } from '@/data-acces/navigation';
 
 const FooterNav = () => {
   return (
@@ -9,7 +10,14 @@ const FooterNav = () => {
       <div>
         <H3 className='underline'>Links</H3>
         <nav className='space-y-1 flex flex-col'>
-          <NavLink name='Home' href='/' className='w-fit' />
+          {navigation.map((item) => (
+            <NavLink
+              key={item.name}
+              name={item.name}
+              href={item.href}
+              className='w-1/4'
+            />
+          ))}
         </nav>
       </div>
       <div>

@@ -27,6 +27,7 @@ import Link from 'next/link';
 import NavLink from './NavLink';
 import { Separator } from '../ui/separator';
 import { getUser } from '@/lib/auth';
+import { navigation } from '@/data-acces/navigation';
 
 const Drawer = async () => {
   const user = await getUser();
@@ -45,7 +46,9 @@ const Drawer = async () => {
             <Separator />
             <SheetDescription>
               <nav className='space-y-1'>
-                <NavLink name='Home' href='/' />
+                {navigation.map((item) => (
+                  <NavLink key={item.name} name={item.name} href={item.href} />
+                ))}
               </nav>
             </SheetDescription>
           </SheetContent>
