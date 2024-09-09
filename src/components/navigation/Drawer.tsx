@@ -32,7 +32,7 @@ const Drawer = async () => {
   const user = await getUser();
   return (
     <>
-      <header className='flex items-center justify-between py-3 px-6 sticky top-0 z-50 bg-base-100 backdrop-saturate-180 backdrop-blur-xl'>
+      <header className='flex items-center justify-between py-3 px-6 sticky top-0 z-50 bg-base-100 backdrop-saturate-180 backdrop-blur-xl border border-b'>
         <Sheet>
           <SheetTrigger>
             <Menu className='h-6 w-6' />

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
-import { Drawer } from '@/components/navigation';
+import { Drawer, FooterNav } from '@/components/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +21,8 @@ export default function RootLayout({
       <html lang='en'>
         <body className={inter.className}>
           <Drawer />
-          <main className='container mx-auto'>{children}</main>
+          <main className='container mx-auto min-h-screen'>{children}</main>
+          <FooterNav />
         </body>
       </html>
     </ClerkProvider>
