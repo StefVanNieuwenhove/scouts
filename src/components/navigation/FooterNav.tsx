@@ -9,7 +9,7 @@ const FooterNav = () => {
     <footer className='w-full py-3 px-6 bg-base-100 backdrop-saturate-180 backdrop-blur-xl border border-t grid md:grid-cols-3 grid-cols-1 gap-4 md:gap-8'>
       <div>
         <H3 className='underline'>Links</H3>
-        <nav className='space-y-1 flex flex-col'>
+        <nav className='space-y-1 flex flex-wrap gap-1'>
           {navigation.map((item) => (
             <NavLink
               key={item.name}

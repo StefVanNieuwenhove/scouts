@@ -21,7 +21,7 @@ export default function RootLayout({
       <html lang='en'>
         <body className={inter.className}>
           <Drawer />
-          <main className='container mx-auto min-h-screen'>{children}</main>
+          {children}
           <FooterNav />
         </body>
       </html>
