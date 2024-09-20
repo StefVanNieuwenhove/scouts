@@ -17,11 +17,13 @@ const NavLink = ({ className, name, href }: NavLinkProps) => {
   const isActive = pathname === href;
 
   return (
-    <Button
-      variant={isActive ? 'default' : 'outline'}
-      className={cn(`w-full ${isActive && 'underline'}`, className)}>
-      <Link href={href}>{name}</Link>
-    </Button>
+    <Link href={href} className={className}>
+      <Button
+        variant={isActive ? 'default' : 'outline'}
+        className={`w-full ${isActive && 'underline'}`}>
+        {name}
+      </Button>
+    </Link>
   );
 };
 

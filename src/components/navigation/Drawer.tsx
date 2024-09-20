@@ -39,17 +39,26 @@ const Drawer = async () => {
             <Menu className='h-6 w-6' />
           </SheetTrigger>
           <SheetContent side={'left'} className='space-y-1'>
-            <SheetTitle>
-              Welkom {user?.firstName} {user?.lastName}
-            </SheetTitle>
-            <Small>Role: {(user?.publicMetadata?.role as string) || '-'}</Small>
+            <SignedIn>
+              <SheetTitle>
+                Welkom {user?.firstName} {user?.lastName}
+              </SheetTitle>
+              <Small>
+                Role: {(user?.publicMetadata?.role as string) || '-'}
+              </Small>
+            </SignedIn>
+            <SignedOut>
+              <SheetTitle>Welkom bij Scouts Ter Alwina</SheetTitle>
+              <Small>Log in of registreer</Small>
+            </SignedOut>
             <Separator />
             <SheetDescription>
-              <nav className='space-y-1'>
+              <nav className='flex flex-col gap-2'>
                 {navigation.map((item) => (
                   <NavLink key={item.name} name={item.name} href={item.href} />
                 ))}
               </nav>
+              <Separator className='my-2' />
             </SheetDescription>
           </SheetContent>
         </Sheet>
