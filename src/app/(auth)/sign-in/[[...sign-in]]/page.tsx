@@ -1,9 +1,9 @@
-import { SignIn } from '@clerk/nextjs';
+import { SignInForm } from '@/components/form';
 
 const SignInPage = () => {
   return (
-    <main className='container mx-auto flex items-center justify-center h-screen'>
-      <SignIn />
+    <main className='container mx-auto w-full h-screen flex justify-center py-5'>
+      <SignInForm />
     </main>
   );
 };

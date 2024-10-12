@@ -14,10 +14,57 @@ datasource db {
 }
 
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+model Leiding {
+  id        String   @id @default(uuid())
   name      String
+  email     String   @unique
+  phone     String   @unique
+  totem     String
+  tak       Tak
+  takResponsible Boolean @default(false)
+  image     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([email], name: "email")
+  @@index([phone], name: "phone")
+
+  @@map("leiding")
+}
+
+model User {
+  id String @id 
+  firstName String
+  lastName String
+  email String @unique
+  role Role[] @default([OUDER])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Vergaderingen {
+  id        String   @id @default(uuid())
+  name      String
+  date      DateTime
+  description String
+  tak Tak
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+enum Tak {
+  KAPOENEN
+  WOUTERS
+  JONGGIVERS
+  GIVERS
+  JINS
+}
+
+enum Role {
+  OUDER
+  LEIDING
+  GROEPSLEIDING
+  RVB
+  ADMIN
 }

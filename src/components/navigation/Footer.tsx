@@ -37,9 +37,11 @@ const Footer = () => {
           </li>
           <li className='flex items-center gap-2'>
             <Mail className='h-4 w-4' />
-            <p className='text-sm text-base-content/70'>
+            <a
+              href='mailto:scoutsteralwina.info@gmail.com'
+              className='text-sm text-base-content/70 hover:underline cursor-alias'>
               scoutsteralwina.info@gmail.com
-            </p>
+            </a>
           </li>
         </ul>
       </div>

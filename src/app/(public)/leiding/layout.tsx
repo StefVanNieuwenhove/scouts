@@ -17,7 +17,7 @@ const LeidingLayout = ({ children }: LeidingLayoutProps) => {
           <br /> Op takraden worden de activiteiten in elkaar gebokst om samen
           met de kinderen veel plezier te maken.
         </p>
-        <nav className='flex space-x-1 w-max'>
+        <nav className='flex flex-wrap gap-2 w-full'>
           <NavLink name='Groepsleiding' href='/leiding' />
           <NavLink name='Kapoenen' href='/leiding/kapoenen' />
           <NavLink name='Wouters' href='/leiding/wouters' />

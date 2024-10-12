@@ -52,13 +52,16 @@ const Drawer = async () => {
               <Small>Log in of registreer</Small>
             </SignedOut>
             <Separator />
-            <SheetDescription>
-              <nav className='flex flex-col gap-2'>
-                {navigation.map((item) => (
-                  <NavLink key={item.name} name={item.name} href={item.href} />
-                ))}
-              </nav>
-              <Separator className='my-2' />
+            <SheetDescription className='flex flex-col gap-2'>
+              {navigation.map((item) => (
+                <NavLink key={item.name} name={item.name} href={item.href} />
+              ))}
+              <span
+                className={
+                  'shrink-0 bg-slate-200 dark:bg-slate-800 h-[1px] w-full'
+                }
+              />
+              {/* <Separator className='my-2' /> */}
             </SheetDescription>
           </SheetContent>
         </Sheet>
