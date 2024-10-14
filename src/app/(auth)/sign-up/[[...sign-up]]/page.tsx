@@ -1,9 +1,9 @@
 'use client';
 
 import { SignUpForm, VerificationCodeForm } from '@/components/form';
-import { createUser } from '@/data-acces/users';
+import { createUser, setPublicMetadata } from '@/data-acces/users';
 import { SignUpSchema, VerificationCodeSchema } from '@/lib/validation';
-import { useSignUp } from '@clerk/nextjs';
+import { useSignUp, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -13,6 +13,7 @@ const SignUpPage = () => {
   const [pendingVerification, setPendingVerification] = useState(false);
 
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { user } = useUser();
   const router = useRouter();
 
   const handleSubmit = async (data: z.infer<typeof SignUpSchema>) => {
@@ -59,28 +60,8 @@ const SignUpPage = () => {
         console.log(JSON.stringify(completeSignUp, null, 2));
       }
       if (completeSignUp.status === 'complete') {
-        // add user to db
-        const { firstName, lastName, emailAddress, createdUserId } =
-          completeSignUp;
-        console.log({ firstName, lastName, emailAddress, createdUserId });
-        const response = await createUser({
-          id: createdUserId as string,
-          firstName: firstName as string,
-          lastName: lastName as string,
-          email: emailAddress as string,
-        });
-        console.log(response);
-
-        if (response.type === 'error') {
-          toast.error(response.message, {
-            duration: 5000,
-            richColors: true,
-          });
-          return;
-        }
-
-        // set user as active
         await setActive({ session: completeSignUp.createdSessionId });
+        await setPublicMetadata(completeSignUp.createdUserId as string);
 
         toast.success('Account succesvol aangemaakt', {
           duration: 5000,

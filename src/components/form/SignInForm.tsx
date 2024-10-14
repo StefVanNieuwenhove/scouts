@@ -114,6 +114,7 @@ const SignInForm = () => {
               className='w-full border-primary hover:underline'
               variant={'outline'}
               type='reset'
+              disabled={form.formState.isSubmitting}
               onClick={() => form.reset()}>
               Reset
             </Button>

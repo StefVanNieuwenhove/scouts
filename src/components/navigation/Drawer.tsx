@@ -28,9 +28,11 @@ import NavLink from './NavLink';
 import { Separator } from '../ui/separator';
 import { getUser } from '@/lib/auth';
 import { navigation } from '@/data-acces/navigation';
+import { Role } from '@prisma/client';
 
 const Drawer = async () => {
   const user = await getUser();
+  const roles = user?.publicMetadata?.roles as Role[];
   return (
     <>
       <header className='flex items-center justify-between py-3 px-6 sticky top-0 z-50 bg-base-100 backdrop-saturate-180 backdrop-blur-xl border border-b'>
@@ -43,8 +45,8 @@ const Drawer = async () => {
               <SheetTitle>
                 Welkom {user?.firstName} {user?.lastName}
               </SheetTitle>
-              <Small>
-                Role: {(user?.publicMetadata?.role as string) || '-'}
+              <Small className='lowercase'>
+                Role: {roles.map((role) => role).join(' | ')}
               </Small>
             </SignedIn>
             <SignedOut>
