@@ -1,8 +1,7 @@
-export type NavigationLinks = {
+export type NavigationLink = {
   name: string;
   href: string;
-  acces: boolean;
-}[];
+};
 
 export type FormResponse = {
   type: 'success' | 'error';

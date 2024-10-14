@@ -1,4 +1,4 @@
-import { NavLink } from '@/components/navigation';
+import { Nav, NavLink } from '@/components/navigation';
 import { H2 } from '@/components/typography';
 import React from 'react';
 
@@ -17,14 +17,45 @@ const LeidingLayout = ({ children }: LeidingLayoutProps) => {
           <br /> Op takraden worden de activiteiten in elkaar gebokst om samen
           met de kinderen veel plezier te maken.
         </p>
-        <nav className='flex flex-wrap gap-2 w-full'>
+        <Nav
+          variant={'outline'}
+          activeVariant={'default'}
+          links={[
+            {
+              name: 'Groepsleiding',
+              href: '/',
+            },
+            {
+              name: 'Kapoenen',
+              href: '/leiding/kapoenen',
+            },
+            {
+              name: 'Wouters',
+              href: '/leiding/wouters',
+            },
+            {
+              name: 'Jonggivers',
+              href: '/leiding/jonggivers',
+            },
+            {
+              name: 'Givers',
+              href: '/leiding/givers',
+            },
+            {
+              name: 'Jins',
+              href: '/leiding/jins',
+            },
+          ]}
+        />
+
+        {/* <nav className='flex flex-wrap gap-2 w-full'>
           <NavLink name='Groepsleiding' href='/leiding' />
           <NavLink name='Kapoenen' href='/leiding/kapoenen' />
           <NavLink name='Wouters' href='/leiding/wouters' />
           <NavLink name='Jonggivers' href='/leiding/jonggivers' />
           <NavLink name='Givers' href='/leiding/givers' />
           <NavLink name='Jins' href='/leiding/jins' />
-        </nav>
+        </nav> */}
       </article>
       {children}
     </main>
