@@ -9,6 +9,7 @@ type NavProps = PropsWithChildren & {
   variant: ButtonProps['variant'];
   links: NavigationLink[];
   activeVariant?: ButtonProps['variant'];
+  fullWidth?: boolean;
 };
 
 const Nav = ({
@@ -16,11 +17,12 @@ const Nav = ({
   variant,
   links,
   activeVariant = 'link',
+  fullWidth = false,
 }: NavProps) => {
   const [active, setActive] = useState(links[0]);
   return (
     <>
-      <nav className='flex flex-wrap gap-2 w-full'>
+      <nav className={`flex flex-wrap gap-2 ${fullWidth && 'w-full'}`}>
         {links.map((link) => (
           <Button
             asChild

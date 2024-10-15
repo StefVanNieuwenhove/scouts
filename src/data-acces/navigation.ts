@@ -1,7 +1,6 @@
 import { NavigationLink } from '@/types';
 
-export const navigation: NavigationLink[] = [
-  /* public links */
+export const publicNavigation: NavigationLink[] = [
   {
     name: 'Home',
     href: '/',
@@ -26,44 +25,58 @@ export const navigation: NavigationLink[] = [
     name: 'Contact',
     href: '/contact',
   },
-
-  /* parents links */
-
-  /* RVB links */
-
-  /* leiding links */
 ];
 
-export const navigationFooter: NavigationLink[] = [
-  /* public links */
+export const leidingNavigation: NavigationLink[] = [
   {
-    name: 'Home',
-    href: '/',
+    name: 'Groepsleiding',
+    href: '/leiding/',
   },
   {
-    name: 'Leiding',
-    href: '/leiding',
+    name: 'Kapoenen',
+    href: '/leiding/kapoenen',
   },
   {
-    name: 'Maandlijst',
+    name: 'Wouters',
+    href: '/leiding/wouters',
+  },
+  {
+    name: 'Jonggivers',
+    href: '/leiding/jonggivers',
+  },
+  {
+    name: 'Givers',
+    href: '/leiding/givers',
+  },
+  {
+    name: 'Jins',
+    href: '/leiding/jins',
+  },
+];
+
+export const maandlijstNavigation: NavigationLink[] = [
+  {
+    name: 'Volledige maandlijst',
     href: '/maandlijst',
   },
   {
-    name: 'Uniform',
-    href: '/uniform',
+    name: 'Kapoenen',
+    href: '/maandlijst/kapoenen',
   },
   {
-    name: 'Inschrijvingen',
-    href: '/inschrijvingen',
+    name: 'Wouters',
+    href: '/maandlijst/wouters',
   },
   {
-    name: 'Contact',
-    href: '/contact',
+    name: 'Jonggivers',
+    href: '/maandlijst/jonggivers',
   },
-
-  /* parents links */
-
-  /* RVB links */
-
-  /* leiding links */
+  {
+    name: 'Givers',
+    href: '/maandlijst/givers',
+  },
+  {
+    name: 'Jins',
+    href: '/maandlijst/jins',
+  },
 ];

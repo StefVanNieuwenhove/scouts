@@ -1,3 +1,4 @@
+import { Tak } from '@prisma/client';
 import { z } from 'zod';
 
 export const SignInSchema = z.object({
@@ -30,4 +31,19 @@ export const SignUpSchema = z
 
 export const VerificationCodeSchema = z.object({
   code: z.string().min(6, 'Code moet min 6 cijfers lang zijn'),
+});
+
+export const CreateLeidingSchema = z.object({
+  name: z.string().min(1, 'Naam is verplicht'),
+  email: z.string().email('Email is verplicht'),
+  phone: z
+    .string()
+    .regex(/^[0-9]{10}$/, 'Telefoonnummer heeft niet het juiste formaat'),
+  totem: z.string().min(1, 'Totem is verplicht'),
+  tak: z
+    .enum([Tak.KAPOENEN, Tak.WOUTERS, Tak.JONGGIVERS, Tak.GIVERS, Tak.JINS])
+    .default(Tak.KAPOENEN),
+  takResponsible: z.boolean().default(false),
+  isGroepsleiding: z.boolean().default(false),
+  image: z.string().optional(),
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import { H3 } from '../typography';
 import { Clock2, Mail, MapPin } from 'lucide-react';
 import NavLink from './NavLink';
-import { navigation } from '@/data-acces/navigation';
+import { publicNavigation } from '@/data-acces/navigation';
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
       <div>
         <H3 className='underline'>Links</H3>
         <nav className='space-y-1 flex flex-wrap gap-1'>
-          {navigation.map((item) => (
+          {publicNavigation.map((item) => (
             <NavLink
               key={item.name}
               name={item.name}

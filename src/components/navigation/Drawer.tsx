@@ -27,7 +27,7 @@ import Link from 'next/link';
 import NavLink from './NavLink';
 import { Separator } from '../ui/separator';
 import { getUser } from '@/lib/auth';
-import { navigation } from '@/data-acces/navigation';
+import { publicNavigation } from '@/data-acces/navigation';
 import { Role } from '@prisma/client';
 
 const Drawer = async () => {
@@ -55,7 +55,7 @@ const Drawer = async () => {
             </SignedOut>
             <Separator />
             <SheetDescription className='flex flex-col gap-2'>
-              {navigation.map((item) => (
+              {publicNavigation.map((item) => (
                 <NavLink key={item.name} name={item.name} href={item.href} />
               ))}
               <span

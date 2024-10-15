@@ -1,6 +1,8 @@
-import { NavLink } from '@/components/navigation';
+import { IconLink, Nav, NavLink } from '@/components/navigation';
 import { H2 } from '@/components/typography';
 import { Button } from '@/components/ui/button';
+import { maandlijstNavigation } from '@/data-acces/navigation';
+import { Edit } from 'lucide-react';
 
 type MaandlijstLayoutProps = {
   children: React.ReactNode;
@@ -10,16 +12,18 @@ const MaandlijstLayout = ({ children }: MaandlijstLayoutProps) => {
   return (
     <>
       <main className='container mx-auto h-screen w-full my-5'>
-        <H2 className='underline'>Maandlijst</H2>
+        <div className='flex items-center justify-between'>
+          <H2 className='underline'>Maandlijst</H2>
+          <IconLink href={'/edit/maandlijst'} variant={'outline'}>
+            <Edit className='h-4 w-4' />
+          </IconLink>
+        </div>
         <article className='flex items-center justify-between flex-wrap gap-2 prose prose-invert max-w-none my-2 space-y-2'>
-          <nav className='flex flex-wrap gap-2 w-max my-2'>
-            <NavLink name='Volledige maandlijst' href='/maandlijst' />
-            <NavLink name='Kapoenen' href='/maandlijst/kapoenen' />
-            <NavLink name='Wouters' href='/maandlijst/wouters' />
-            <NavLink name='Jonggivers' href='/maandlijst/jonggivers' />
-            <NavLink name='Givers' href='/maandlijst/givers' />
-            <NavLink name='Jins' href='/maandlijst/jins' />
-          </nav>
+          <Nav
+            variant={'outline'}
+            activeVariant={'default'}
+            links={maandlijstNavigation}
+          />
           <Button variant={'link'} className='underline'>
             Download maandlijst
           </Button>

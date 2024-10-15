@@ -22,3 +22,7 @@ export const convertToTak = (tak: string): Tak => {
       return Tak.KAPOENEN;
   }
 };
+
+export const getTakValues = () => {
+  return Object.values(Tak);
+};

@@ -22,6 +22,7 @@ model Leiding {
   totem     String
   tak       Tak
   takResponsible Boolean @default(false)
+  groepsleiding Boolean @default(false)
   image     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
